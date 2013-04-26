@@ -1,0 +1,87 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>文件共享系统</title>
+<meta name="Keywords" content="论文 共享" />
+<meta name="Description"
+	content="采用多点上传技术，支持断点续传，支持超大文件的上传，支付多文件上传，不限上传空间 " />
+<meta name="robots" content="index, follow" />
+<meta name="googlebot" content="index, follow" />
+
+<script type="text/javascript" src="/js/ajax.js"></script>
+</head>
+
+
+<script type="text/javascript">
+	function response(XMLHttp,redireck) {
+		if(!redireck){
+			alert(XMLHttp.responseText);
+		}else{
+			window.location.href=XMLHttp.responseText.LTrim()
+		}
+	}
+
+	function ajaxSubmit(form) {
+		var url = "/rest/userinfo"; //处理文件  
+		XMLHttp.formSubmit(form, url, response);
+	}
+	function check() {
+		name = document.getElementById("userName");
+		password = document.getElementById("password");
+		password1 = document.getElementById("confirmPass");
+		if (name.value == '') {
+			document.getElementById("userNameInfo").innerHTML = "<font color='red'>昵称不能为空！</font>";
+			name.focus();
+			return false;
+		} else if (password.value == '') {
+			document.getElementById("passwordInfo").innerHTML = "<font color='red'>密码不能为空！</font>";
+			password.focus();
+			return false;
+		} else if (password1.value == '') {
+			document.getElementById("confirmPassInfo").innerHTML = "<font color='red'>密码不能为空！</font>";
+			password1.focus();
+			return false;
+		} else if (password.value != password1.value) {
+			document.getElementById("confirmPassInfo").innerHTML = "<font color='red'>两次输入的密码不一致！</font>";
+			password.focus();
+			return false;
+		} else {
+			clear();
+			return true;
+		}
+	}
+
+	function clear() {
+		document.getElementById("userNameInfo").innerHTML = "";
+		document.getElementById("passwordInfo").innerHTML = "";
+		document.getElementById("confirmPassInfo").innerHTML = "";
+	}
+	function exec(form) {
+		clear();
+		if (check() == true) {
+			ajaxSubmit(form);
+		}
+	}
+</script>
+<body>
+
+	<div align="center">
+		<img src="/pics/index.jpg" alt="file-shared system based on web" />
+		<form action="" onsubmit="exec(this);return false;">
+		<input id="method" type="hidden" value="register">
+			userName:<input id="userName" type="text" value="userName" />
+			<div id="userNameInfo"></div>
+			<br> password:<input id="password" type="text" value="password" />
+			<div id="passwordInfo"></div>
+			<br> confirm:<input id="confirmPass" type="text"
+				value="confirmPass" />
+			<div id="confirmPassInfo"></div>
+			<br> <input type="submit" value="submit" />&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="reset" value="reset" />
+		</form>
+	</div>
+
+</body>
+</html>

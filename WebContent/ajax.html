@@ -1,0 +1,28 @@
+ 
+<!DOCTYPE>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+<title>About</title>
+<script type="text/javascript" src="/js/ajax.js"></script>
+</head>
+<script type="text/javascript">
+	function response(XMLHttp,redireck) {
+		if(!redireck){
+			alert(XMLHttp.responseText);
+		}else{			
+			window.location.href="/rest/userzone/"+XMLHttp.responseText.LTrim();
+		}
+	}
+
+	window.onload = function ajaxSubmit(null) {
+		alert("funciton:ajaxSubmit()");
+		var url = 'http://localhost:8080/rest/userinfo/login'; //处理文件  
+		XMLHttp.formSubmit(null,url, response);
+	}
+	
+</scritp>
+
+<body>
+</body>
+<html>

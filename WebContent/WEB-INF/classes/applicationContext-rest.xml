@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
+<beans default-autowire="byName" default-lazy-init="true">
+
+	<!-- Restlet Component bean -->
+	<bean name="component" id="component" class="org.restlet.ext.spring.SpringComponent">
+		<property name="defaultTarget" ref="application" />
+	</bean>
+	<bean name="application" id="application" class="org.restlet.Application">
+		<property name="inboundRoot" ref="restRouter" />
+	</bean>
+	<!-- Restlet Router bean -->
+	<bean id="restRouter" name="restRouter" class="org.restlet.ext.spring.SpringRouter">
+		<property name="attachments">
+			<map>
+				<entry key="/userInfo/login">
+					<bean class="org.restlet.ext.spring.SpringFinder">
+						<lookup-method name="create" bean="UserInfoResource" />
+					</bean>
+				</entry>
+				<entry key="/userzone/{loginId}">
+					<bean class="org.restlet.ext.spring.SpringFinder">
+						<lookup-method name="create" bean="UserZoneResource" />
+					</bean>
+				</entry>
+				<entry key="/fileInfo/{loginId}/{pageNum}">
+					<bean class="org.restlet.ext.spring.SpringFinder">
+						<lookup-method name="create" bean="FileInfoResource" />
+					</bean>
+				</entry>
+				<entry key="/admin/fileType/{parentId}/{pageNum}">
+					<bean class="org.restlet.ext.spring.SpringFinder">
+						<lookup-method name="create" bean="FileTypeResource" />
+					</bean>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<!-- beans referred by routers -->
+
+	<!-- FileType resource -->
+	<bean id="FileTypeResource" class="com.polycom.edge.webadmin.remote.rest.FileTypeResource">
+	</bean>
+	
+	<!-- FileInfo resource -->
+	<bean id="FileInfoResource" class="com.polycom.edge.webadmin.remote.rest.FileInfoResource">
+	</bean>
+		
+	<!-- UserInfo resource -->
+	<bean id="UserInfoResource" class="com.polycom.edge.webadmin.remote.rest.UserInfoResource">
+	</bean>
+	<!-- User Zone resource-->
+	<bean id="UserZoneResource" class="com.polycom.edge.webadmin.remote.rest.UserZoneResource">
+	</bean>
+
+
+</beans>

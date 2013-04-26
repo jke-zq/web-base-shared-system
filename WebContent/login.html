@@ -1,0 +1,73 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>文件共享系统</title>
+<meta name="Keywords" content="论文 共享" />
+<meta name="Description"
+	content="采用多点上传技术，支持断点续传，支持超大文件的上传，支付多文件上传，不限上传空间 " />
+<meta name="robots" content="index, follow" />
+<meta name="googlebot" content="index, follow" />
+
+</head>
+<script type="text/javascript" src="/js/ajax.js"></script>
+
+<script type="text/javascript">
+	function response(XMLHttp,redireck) {
+		if(!redireck){
+			alert(XMLHttp.responseText);
+		}else{
+			window.location.href=XMLHttp.responseText.LTrim()
+		}
+	}
+
+	function ajaxSubmit(form) {
+		var url = "/rest/userinfo";
+		XMLHttp.formSubmit(form, url, response);
+	}
+	function check() {
+		var name = document.getElementById("userName").value;
+		var password = document.getElementById("password").value;
+		if (name == '') {
+			document.getElementById("userNameInfo").innerHTML = "<font color='red'>昵称不能为空！</font>";
+			return false;
+		} else
+		if (password == '') {
+			document.getElementById("passwordInfo").innerHTML = "<font color='red'>密码不能为空！</font>";
+			return false;
+		} else{
+			clear();
+			return true;
+		}
+
+	}
+
+	function clear() {
+		document.getElementById("userNameInfo").innerHTML = "";
+		document.getElementById("passwordInfo").innerHTML = "";
+	}
+	function exec(form) {
+		clear();
+		if (check() == true) {
+			ajaxSubmit(form);
+		}
+	}
+</script>
+<body>
+
+	<div align="center">
+		<img src="/pics/index.jpg" alt="file-shared system based on web" />
+		<form action='' onsubmit="exec(this);return false;" >
+		<input id="method" type="hidden" value="login">
+			userName:<input id="userName" type="text" value="userName" onclick="this.value=''"/>
+			<div id="userNameInfo" ></div>
+			<br> password:<input id="password" type="text" value="password" onclick="this.value=''" />
+			<div id="passwordInfo" ></div>
+			<br> <input type="submit" value="login" />&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="reset" value="reset" />
+		</form>
+	</div>
+
+</body>
+</html>

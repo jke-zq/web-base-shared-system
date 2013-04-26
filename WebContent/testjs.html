@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>上传文件显示</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="/css/vip.css" type="text/css">
+<script type="text/javascript" src="/js/FoshanRen.js"></script>
+<script type="text/javascript" src="/js/ajax.js"></script>
+</head>
+
+<script type="text/javascript">
+	function response(XMLHttp,torf) {
+		var objs=XMLHttp.responseText.LTrim().split("#");
+		for(i=0;i<objs.length;i++){
+			var values=objs[i].split();
+			for(j=0;j<values.length;j++){
+				alert(values[i]);
+				document.write(values[j]);
+			}
+		}	
+	}
+
+	window.onload=function ajaxSubmit() {
+		var url = 'http://localhost:8080/rest/fileinfo/guest'; 
+		XMLHttp.redirect(url, response);
+	}
+</script>
+
+
+<body>
+
+</body>
+</html>
