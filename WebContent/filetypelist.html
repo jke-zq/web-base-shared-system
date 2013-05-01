@@ -40,7 +40,7 @@
 							break;
 						case 4:
 							cell.setAttribute("width","22%");
-							cell.innerHTML='<div align="center" ><a href="/add_fileType.html?parentid='+ values[0] +'"><input type="button" value="download"/></a></div>';
+							cell.innerHTML='<div align="center" ><a href="/add_fileType.html?parentid='+ values[0] +'"><input type="button" value="add"/></a></div>';
 							break;
 						default:
 							cell.innerHTML='<B>sorry, null</B>';
@@ -101,7 +101,7 @@
 	}
 	
 	function deleteFiles(objform){
-		objform.action='';
+		objform.action='www.baidu.com';
 		objform.method.value="delete";
 		objform.submit("width","98%");
 	}

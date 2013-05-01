@@ -66,7 +66,7 @@ public class FileInfoResource extends ServerResource {
 		params.add(true);
 		jpql.append(" and o.shared = ?2 ");
 		params.add(true);
-		jpql.append(" o.user.name = ?3 ");
+		jpql.append(" and o.user.name = ?3 ");
 		params.add(loginId);
 		
 		pageView.setQueryResult(fileService.getScrollData(

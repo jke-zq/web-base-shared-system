@@ -43,6 +43,11 @@
 						<lookup-method name="create" bean="FileTypeResource" />
 					</bean>
 				</entry>
+				<entry key="/childtype">
+					<bean class="org.restlet.ext.spring.SpringFinder">
+						<lookup-method name="create" bean="FileTypeResource" />
+					</bean>
+				</entry>
 				<entry key="/filetypesele/{parentId}">
 					<bean class="org.restlet.ext.spring.SpringFinder">
 						<lookup-method name="create" bean="FileTypeSelect" />

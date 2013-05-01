@@ -1,0 +1,5 @@
+time: May/1 2013
+question:
+	when sending the form request by http post method to the server, Restlet use the method of Resource with the @get. And the getRequest().getMethod() show the http method ot the request is "post".
+	why??
+	Is the bug of Restlet????

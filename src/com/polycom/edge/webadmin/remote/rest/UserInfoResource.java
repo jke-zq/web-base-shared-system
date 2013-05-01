@@ -51,6 +51,7 @@ public class UserInfoResource extends ServerResource{
 			}
 			System.out.println("redirecting:" + name.trim() );
 			String url = "/rest/zone/" + name.trim();
+			System.out.println(url);
         	redirectSeeOther(new Reference(reference, url));
 		}else{
 			if(!userServ.checkUser(userInfo.getName())){

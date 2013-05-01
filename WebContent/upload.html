@@ -48,7 +48,7 @@ function checkfm(form) {
 		}
 	}
 	//for the userName value 
-	form.userName.value=QueryString("loginId");
+	form.userName.value=QueryString("parentid");
 	return true;
 }
 
@@ -79,7 +79,8 @@ function SureSubmit(objForm){
 
 <body bgcolor="#FFFFFF" text="#000000" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <form id="form" action="/rest/uploadfile" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
-<input type="hidden" id="userName" name="userName" value="guest">
+<input type="hidden" id="userName" name="userName" value="guest"/>
+<input type="hidden" id="typeid" name="typeid" value="0"/>
   <table width="98%" border="0" cellspacing="1" cellpadding="3" align="center">
     <tr bgcolor="6f8ac4"> 
       <td colspan="2" ><font color="#FFFFFF">添加文件：</font></td>
@@ -92,7 +93,7 @@ function SureSubmit(objForm){
     <tr bgcolor="f5f5f5"> 
       <td width="25%"> <div align="right">文件类别<font color="#FF0000">*</font>  ：</div></td>
       <td width="75%"> <input type="text" name="v_type_name" disabled="true" size="30"/> 
-        <input type="button" name="select" value="选择..." onClick="javaScript:winOpen('','列表',600,400)"/>
+        <input type="button" name="select" value="选择..." onClick="javaScript:winOpen('http://localhost:8080/fileTypeSelect.html','列表',600,400)"/>
       </td>
     </tr>
 	<tr bgcolor="f5f5f5"> 

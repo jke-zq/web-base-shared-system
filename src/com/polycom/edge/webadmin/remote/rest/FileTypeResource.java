@@ -5,8 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 
-import org.restlet.data.Form;
 import org.restlet.data.MediaType;
+import org.restlet.data.Reference;
 import org.restlet.data.Status;
 import org.restlet.representation.Representation;
 import org.restlet.representation.StringRepresentation;
@@ -16,6 +16,7 @@ import org.restlet.resource.ServerResource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.polycom.edge.webadmin.remote.rest.utils.RepResult;
+import com.polycom.edge.webadmin.remote.rest.utils.StrUtils;
 
 public class FileTypeResource extends ServerResource {
 
@@ -24,10 +25,14 @@ public class FileTypeResource extends ServerResource {
 
 	@Autowired
 	private FileTypeService fileTypeServ;
+	private volatile Reference reference = new Reference(
+			"http://localhost:8080");
 
 	@Get
 	public Representation get() {
-
+		System.out.println("entering into FileTypeResource.get method");
+		System.out.println("url:" + getRequest().getHostRef());
+		System.out.println("method:" + getRequest().getMethod());
 		int parentId = 0;
 		int pageNum = 0;
 		try {
@@ -45,7 +50,6 @@ public class FileTypeResource extends ServerResource {
 		List<Object> params = new ArrayList<Object>();
 		params.add(true);
 		System.out.println("the parentType is " + parentId);
-		
 		if (parentId >= 0) {
 			jpql.append(" and o.parentType.id = ?2 ");
 			params.add(parentId);
@@ -57,8 +61,7 @@ public class FileTypeResource extends ServerResource {
 		@SuppressWarnings("serial")
 		QueryResult<FileType> qr = fileTypeServ.getScrollData(
 				pv.getFirstResult(), pv.getMaxresult(), jpql.toString(),
-				params.toArray(),
-				new LinkedHashMap<String, String>() {
+				params.toArray(), new LinkedHashMap<String, String>() {
 					{
 						put("id", "desc");
 					}
@@ -73,44 +76,53 @@ public class FileTypeResource extends ServerResource {
 		for (FileType o : pv.getRecords()) {
 			strValu.append(o.listValue(SEP_INTER) + SEP_EXTER);
 		}
-		strValu.deleteCharAt(strValu.length()-1);
+		strValu.deleteCharAt(strValu.length() - 1);
 		System.out.println("the result is:" + strValu.toString());
 		return new StringRepresentation(strValu.toString(),
 				MediaType.TEXT_PLAIN);
 	}
 
 	@Post
-	public Representation post(Representation entity) {
+	// url:"/filetype/parent/{parentId}"
+	public Representation post() {
+		System.out.println("entering into FileTypeResource.post method");
+		System.out.println("url:" + getRequest().getHostRef());
 		Representation rep = null;
 		int parentId = 0;
+		String[] argums = null;
 		try {
-			parentId = Integer.parseInt((String) getRequest().getAttributes()
-					.get("parentId"));
-		} catch (NumberFormatException e) {
-
-		}
-		// parentId:==0? >0? or whether exits in the database;
-		if (parentId >= 0) {
-			Form form = new Form(entity);
-			String typeName = null;
-			if ((typeName = form.getFirstValue("name")) != null) {
-				FileType fileType = new FileType(typeName);
-				fileType.setTypeDesc(form.getFirstValue("desc"));
-				fileType.setParentType(new FileType(parentId));
-				fileTypeServ.save(fileType);
-				RepResult.respResult(this, Status.SUCCESS_OK, "Successfully!",
-						null);
-			} else {
-				// number:400
-				RepResult.respResult(this, Status.CLIENT_ERROR_BAD_REQUEST,
-						"this name of FileType cant be null!", null);
+			System.out.println(getRequest().getEntityAsText());
+			argums = getRequest().getEntityAsText().split("&");
+			if (StrUtils
+					.areNotBlank(new CharSequence[] { argums[0], argums[1] })) {
+				parentId = Integer.parseInt(argums[0]);
+				if (parentId < 0) {
+					parentId = 0;
+				}
 			}
-		} else {
-			RepResult.respResult(this, Status.CLIENT_ERROR_BAD_REQUEST,
-					"the parentId is invalid!", null);
-
+		} catch (NumberFormatException e) {
+			rep = RepResult.respResult(this, Status.CLIENT_ERROR_BAD_REQUEST,
+					"The address is invalid!", null);
 		}
-
+		FileType fileType = new FileType(argums[1]);
+		fileType.setTypeDesc(argums[2]);
+		fileType.setParentType(new FileType(parentId));
+		fileTypeServ.save(fileType);
+		rep = RepResult.respResult(this, Status.SUCCESS_OK, "Successfully!",
+				null);
+		String url = "/filetypelist.html";
+		System.out.println(url);
+		redirectSeeOther(new Reference(reference, url));
 		return rep;
+	}
+	
+	@Post
+	public Representation post(Representation entity) {
+		return post();
+		
+	}
+	@Get
+	public Representation get(Representation entity) {
+		return get();
 	}
 }
