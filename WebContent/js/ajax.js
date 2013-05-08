@@ -2,8 +2,22 @@ function QueryString(item) {
 	var qs = location.search.match(new RegExp("[\?\&]" + escape(item)
 			+ "=([^\&]*)(\&?)"));
 //	return qs ? unescape(qs[1]) : unescape(qs);
-	return qs ? unescape(qs[1]) : "null";
-}
+	return qs ? unescape(qs[1]) : null;
+};
+
+//change the userName value to the new one of the QueryString returns new value;
+function changeParam( ahref, paraName,defaultStr){
+    var newStr=QueryString(paraName);
+    var hrefStr=ahref.href;
+    if(hrefStr.indexOf("=")<0){
+    	ahref.href=ahref.href+"?"+paraName+"="+defaultStr;
+    	return true;
+    }
+    var oldHref=hrefStr.split("=");
+    if(newStr != null && oldHref[1] != newStr){
+     ahref.href=oldHref[0]+"="+newStr;
+    }
+  }
 
 // 去除字符串中间空格
 String.prototype.Trim = function() {
@@ -85,7 +99,7 @@ var XMLHttp = {
 				// 设定请求编码方式
 				setRequestHeader("Content-Type",
 						"application/x-www-form-urlencoded; charset=UTF-8");
-					send(data);
+				send(data);
 				onreadystatechange = function(){
 						if (objXMLHttp.readyState == 4) {
 							if (objXMLHttp.status == 200 || objXMLHttp.status == 304) {

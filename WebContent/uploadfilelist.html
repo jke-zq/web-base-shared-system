@@ -82,15 +82,14 @@
 	
 
 	window.onload=function() {
-		var url = '/rest/fileinfo/' + QueryString("loginId");
+		var url = '/rest/fileinfo/' + QueryString("username") + '/1';
 		XMLHttp.redirect(url, response);
 	}
 
 	//到指定的分页页面
 	function topage(page){
-		var form = document.forms[0];
-		form.page.value=page;
-		form.submit();
+		var url = '/rest/fileinfo/' + QueryString("username") + '/' + page;
+		XMLHttp.redirect(url, response);
 	}
 	
 	function allselect(allobj,items){

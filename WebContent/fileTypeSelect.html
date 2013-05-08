@@ -32,7 +32,7 @@ function response(XMLHttp,torf) {
 		}
 		var navigation = document.getElementById('navigation');
 		if(navigation){
-			navigation.innerHTML= strAray[0];
+			navigation.innerHTML= strAray[0].RTrim();
 		}	
 			
 	}
@@ -71,11 +71,11 @@ body {
 
 <body>
 产品类别列表,请选择分类:<br>
-导航:<a href=''>顶级目录</a> <div id="navigation"></div>
+<div id="navigation"></div>
 <form method="post" name="main" action="">
 <table width="100%" border="0" cellspacing="1" cellpadding="1">
-  <input type="hidden" name="dicId"/>
-  <input type="hidden" name="dicName"/>
+  <input type="hidden" name="dicId" value="0"/>
+  <input type="hidden" name="dicName" value="ALL"/>
   
 	<tr><td id="typecontent">
 	</td></tr>

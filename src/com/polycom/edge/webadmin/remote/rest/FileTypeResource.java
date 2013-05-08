@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 
 import org.restlet.data.MediaType;
+import org.restlet.data.Method;
 import org.restlet.data.Reference;
 import org.restlet.data.Status;
 import org.restlet.representation.Representation;
@@ -84,7 +85,7 @@ public class FileTypeResource extends ServerResource {
 
 	@Post
 	// url:"/filetype/parent/{parentId}"
-	public Representation post() {
+	public Representation post(Representation entity) {
 		System.out.println("entering into FileTypeResource.post method");
 		System.out.println("url:" + getRequest().getHostRef());
 		Representation rep = null;
@@ -116,13 +117,4 @@ public class FileTypeResource extends ServerResource {
 		return rep;
 	}
 	
-	@Post
-	public Representation post(Representation entity) {
-		return post();
-		
-	}
-	@Get
-	public Representation get(Representation entity) {
-		return get();
-	}
 }

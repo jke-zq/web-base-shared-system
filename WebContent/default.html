@@ -6,16 +6,18 @@
 
 <script type="text/javascript" src="/js/ajax.js"></script>
 <script type="text/javascript">
-	window.onload=function(){
-		banner.location= "/top.html?userName=" + QueryString("userName");
-		menuframe.location="/menu.html?userName=" + QueryString("userName");
+	window.onload = function() {
+		if (QueryString("username")) {
+			banner.location = "/top.html?username=" + QueryString("username");
+			menuframe.location = "/menu.html?username=" + QueryString("username");
+		}
 	}
 </script>
 </head>
 
-<frameset framespacing="0" border="0" rows="60,*,15" frameborder="0" >
-	<frame id="topLinks" name="banner" scrolling="no" noresize target="contents"
-		src="/top.html" marginwidth="0" marginheight="0" />
+<frameset framespacing="0" border="0" rows="60,*,15" frameborder="0">
+	<frame id="topLinks" name="banner" scrolling="no" noresize
+		target="contents" src="/top.html" marginwidth="0" marginheight="0" />
 	<frameset cols="168,*">
 		<frame name="menuframe" target="mainframe" src="/menu.html"
 			scrolling="no" marginwidth="0" marginheight="0" />

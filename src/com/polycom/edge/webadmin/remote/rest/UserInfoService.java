@@ -6,4 +6,6 @@ public interface UserInfoService extends DTO<UserInfo> {
 	
 	public boolean checkPasswd(UserInfo user);
 	
+	public UserInfo getUserByName(String name);
+	
 }

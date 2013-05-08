@@ -28,7 +28,7 @@
 						<lookup-method name="create" bean="UserZone" />
 					</bean>
 				</entry>
-				<entry key="/fileinfo/{loginId}">
+				<entry key="/fileinfo/{loginId}/{pageNum}">
 					<bean class="org.restlet.ext.spring.SpringFinder">
 						<lookup-method name="create" bean="FileInfoResource" />
 					</bean>

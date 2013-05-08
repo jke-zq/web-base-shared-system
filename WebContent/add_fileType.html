@@ -19,32 +19,36 @@
 			return false;
 		}
 		if (QueryString("parentid")) {
-			form.parentid.value=QueryString("parentid");
-		} 
+			form.parentid.value = QueryString("parentid");
+		}
 		alert("parentid:" + form.parentid.value);
-		//ajaxSubmit(form);
 		return true;
 	}
-	
-	function response(XMLHttp,redireck) {
-		if(!redireck){
+
+	function response(XMLHttp, redireck) {
+		if (!redireck) {
 			alert(XMLHttp.responseText);
-		}else{
-			window.location.href=XMLHttp.responseText.LTrim()
+		} else {
+			window.location.href = XMLHttp.responseText.LTrim()
 		}
 	}
 
 	function ajaxSubmit(form) {
-		var url = "/rest/childtype";
-		XMLHttp.formSubmit(form, url, response);
+		if (checkfm) {
+			var url = "/rest/childtype";
+			XMLHttp.formSubmit(form, url, response);
+		}
+		alert("ti jiao shibai!");
 	}
 </script>
 </head>
 <body bgcolor="#FFFFFF" text="#000000" leftmargin="0" topmargin="0"
 	marginwidth="0" marginheight="0">
-	<form action="/rest/childtype"  method="post" onsubmit="return checkfm(this)">
-	<input type="hidden" name="parentid" value="0"/>
-		<table width="90%" border="0" cellspacing="2" cellpadding="3" align="center">
+	<form action="/rest/childtype" method="post"
+		onsubmit="ajaxSubmit(this);return false">
+		<input type="hidden" name="parentid" value="0" />
+		<table width="90%" border="0" cellspacing="2" cellpadding="3"
+			align="center">
 			<tr bgcolor="6f8ac4">
 				<td colspan="2"><font color="#FFFFFF">添加类别：</font></td>
 			</tr>

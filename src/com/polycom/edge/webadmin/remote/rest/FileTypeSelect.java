@@ -35,10 +35,10 @@ public class FileTypeSelect extends ServerResource {
 		params = new Object[]{parentId};
 		FileType childType = FileTypeServ.find(parentId);
 		FileType parentType = childType.getParentType();
-		sb.insert(0, "&gt;&gt;<a href='/rest/filetypesele/" + childType.getId()+ "'>" + childType.getName() + "</a>");
+		sb.insert(0, "导航:&gt;&gt;<a href='/rest/filetypesele/" + childType.getId()+ "'>" + childType.getName() + "</a>");
 		while(parentType != null){
 			childType = parentType;
-			sb.insert(0, "&gt;&gt;<a href='/rest/filetypesele/" + childType.getId()+ "'>" + childType.getName() + "</a>");
+			sb.insert(0, "导航:&gt;&gt;<a href='/rest/filetypesele/" + childType.getId()+ "'>" + childType.getName() + "</a>");
 			parentType = parentType.getParentType();
 		}
 		System.out.println(sb.toString());

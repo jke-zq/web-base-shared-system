@@ -19,7 +19,7 @@ public class FileInfo extends BaseBean implements Serializable {
     	private static final long serialVersionUID = 10003L;
     	@Id@GeneratedValue(strategy = GenerationType.AUTO) @Column(length=10)
 		private Integer id;
-		@ManyToOne(cascade=CascadeType.REFRESH)
+		@ManyToOne(cascade={CascadeType.MERGE,CascadeType.PERSIST})
 		@JoinColumn(name="userId")
 		private UserInfo user;
 		@Column(nullable=false,length=80)

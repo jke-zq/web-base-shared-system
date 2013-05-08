@@ -6,8 +6,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import javax.servlet.ServletContext;
-
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.restlet.data.Form;
@@ -23,14 +21,19 @@ import org.restlet.resource.ServerResource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.polycom.edge.webadmin.remote.rest.utils.RepResult;
+import com.polycom.edge.webadmin.remote.rest.utils.StrUtils;
 
 public class FileInfoResource extends ServerResource {
-	@Autowired
-	private FileInfoService fileService;
 
 	@Autowired
+	private FileInfoService fileService;
+	@Autowired
+	private UserInfoService userService;
+	@Autowired
+	private FileTypeService typeService;
+	@Autowired
 	private UploadThreadPoolService uploadThrePool;
-//	private UploadThreadPoolServImp uploadThrePool;
+	// private UploadThreadPoolServImp uploadThrePool;
 
 	private String tempPath = "/tempFiles";
 	private volatile Reference baseRef = new Reference("http://localhost:8080");
@@ -46,16 +49,14 @@ public class FileInfoResource extends ServerResource {
 		StringBuffer bf = new StringBuffer();
 		String loginId = null;
 		int pageNum = 1;
-		
-		Form form = getRequest().getReferrerRef().getQueryAsForm();
-		// to validate the user wether if valide?
-		if(form.getFirstValue("loginId") == null || (loginId = form.getFirstValue("loginId")) == null){
+		loginId = (String)getRequest().getAttributes().get("loginId");
+		if (StrUtils.isBlank(loginId)) {
 			loginId = "guest";
 		}
-		if(form.getFirstValue("pageNum") == null ||(pageNum = Integer.parseInt(form.getFirstValue("pageNum"))) < 1){
-			pageNum = 1;
+		String pageNumstr = (String)getRequest().getAttributes().get("pageNum");
+		if(StrUtils.isNotBlank(pageNumstr)) {
+			pageNum = Integer.parseInt(pageNumstr);
 		}
-		
 		// set maxresult =-1 to instate:using 12 default value
 		PageView<FileInfo> pageView = new PageView<FileInfo>(-1, pageNum);
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
@@ -64,13 +65,14 @@ public class FileInfoResource extends ServerResource {
 		List<Object> params = new ArrayList<Object>();
 		jpql.append(" o.visible = ?1 ");
 		params.add(true);
-		jpql.append(" and o.shared = ?2 ");
-		params.add(true);
-		jpql.append(" and o.user.name = ?3 ");
+//		jpql.append(" and o.shared = ?2 ");
+//		params.add(true);
+		jpql.append(" and o.user.name = ?2 ");
 		params.add(loginId);
-		
+		System.out.println("loginId:" + loginId);
 		pageView.setQueryResult(fileService.getScrollData(
-				pageView.getFirstResult(), pageView.getMaxresult(),jpql.toString(), params.toArray(), orderby));
+				pageView.getFirstResult(), pageView.getMaxresult(),
+				jpql.toString(), params.toArray(), orderby));
 		bf.append(pageView.getNumList("&") + ";");
 		for (FileInfo file : pageView.getRecords()) {
 			bf.append(file.getId() + "&" + file.getFileDescription() + "&"
@@ -102,13 +104,34 @@ public class FileInfoResource extends ServerResource {
 					items = uploadFile.parseRequest(getRequest());
 					String tmpFileName = "";
 					String userName = "";
+					int typeid = 0;
 					for (final Iterator<FileItem> it = items.iterator(); it
 							.hasNext();) {
 						FileItem fileItem = it.next();
 						if (fileItem.getName() == null) {
 							if ("userName".equals(fileItem.getFieldName())) {
 								userName = new String(fileItem.get(), "UTF-8");
-								fileInfo.setUser(new UserInfo(userName));
+								if(StrUtils.isBlank(userName)){
+									userName="guest";
+								}
+								UserInfo user = userService.getUserByName(userName);
+								if(user != null){
+									fileInfo.setUser(user);
+								}else{
+									return RepResult.respResult(this, Status.SERVER_ERROR_NOT_IMPLEMENTED, "failed to save the file into Database!",null);
+								}
+							}
+							if("typeid".equals(fileItem.getFieldName())){
+								typeid = Integer.parseInt(new String(fileItem.get(), "UTF-8"));
+								if(typeid<0){
+									typeid=0;
+								}
+								FileType type = typeService.find(typeid);
+								if(type != null){
+									fileInfo.setFileType(type);
+								}else{
+									return RepResult.respResult(this, Status.SERVER_ERROR_NOT_IMPLEMENTED, "failed to save the file into Database!",null);
+								}
 							}
 							if("fileDescription".equals(fileItem
 									.getFieldName())){
@@ -130,14 +153,14 @@ public class FileInfoResource extends ServerResource {
 						}
 					}
 					//to check the file is uploaded finished
-					if(tmpFileName != null && !"".equals(tmpFileName) && new File(path + File.separator + tmpFileName).exists()){
+					if(StrUtils.isNotBlank(tmpFileName) && new File(path + File.separator + tmpFileName).exists()){
 						//to add the db
-						fileInfo.setFilePath(fileInfo.getUser().getName() + File.separator + userName);
-						fileService.save(fileInfo);
+						fileInfo.setFilePath(tmpFileName.replace("#*", File.separator));
 						System.out.println("fileInfo:" + fileInfo.toString());
+						fileService.save(fileInfo);
 						//failed to save the fileInfo so rollback
 						if(fileService.isSaved(fileInfo.getFilePath())){
-							String url = "/uploadfilelist.html?userName=" + userName;
+							String url = "/uploadfilelist.html?username=" + userName;
 							redirectPermanent(new Reference(baseRef,url));
 							//copy and delete
 							uploadThrePool.copyAndDel(tmpFileName,true);
@@ -147,13 +170,10 @@ public class FileInfoResource extends ServerResource {
 							uploadThrePool.copyAndDel(tmpFileName,false);
 							return rep;
 						}
-						
 					}
-
 				} catch (Exception e) {
 					rep = RepResult.respResult(this, Status.CLIENT_ERROR_BAD_REQUEST, e.getMessage(), e);
 				}
-
 			} else {
 				rep = RepResult.respResult(this, Status.CLIENT_ERROR_BAD_REQUEST,"MultiPart/form-data required",null);
 			}
@@ -162,6 +182,8 @@ public class FileInfoResource extends ServerResource {
 		}
 		return rep;
 	}
-	
-	
+
+//	private Boolean checkCascadeBean(Object o) {
+//		return true;
+//	}
 }
