@@ -119,7 +119,9 @@ public class FileInfo extends BaseBean implements Serializable {
 				return false;
 			return true;
 		}
-	
+		public String getName(){
+			return this.filePath.substring(this.filePath.lastIndexOf("/")+1);
+		}
 		@Override
 		public String toString(){
 			return "[userName:" + user.getName() + " description:" + fileDescription + " path:" + filePath  + "]";

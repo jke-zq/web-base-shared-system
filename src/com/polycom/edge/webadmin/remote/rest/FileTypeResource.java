@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 
 import org.restlet.data.MediaType;
-import org.restlet.data.Method;
 import org.restlet.data.Reference;
 import org.restlet.data.Status;
 import org.restlet.representation.Representation;
@@ -23,17 +22,20 @@ public class FileTypeResource extends ServerResource {
 
 	private final String SEP_INTER = "#";
 	private final String SEP_EXTER = "*";
-
+	public FileTypeResource(){
+		getMetadataService().addExtension("application", MediaType.APPLICATION_ALL);
+		getMetadataService().addExtension("wwwForm", MediaType.APPLICATION_WWW_FORM);
+	}
 	@Autowired
 	private FileTypeService fileTypeServ;
 	private volatile Reference reference = new Reference(
 			"http://localhost:8080");
 
-	@Get
+	@Get("application")
 	public Representation get() {
-		System.out.println("entering into FileTypeResource.get method");
-		System.out.println("url:" + getRequest().getHostRef());
+//		System.out.println(getRequest().getEntity().getMediaType().toString());
 		System.out.println("method:" + getRequest().getMethod());
+		System.out.println("entering into FileTypeResource.get method");
 		int parentId = 0;
 		int pageNum = 0;
 		try {
@@ -43,6 +45,7 @@ public class FileTypeResource extends ServerResource {
 		} catch (NumberFormatException e) {
 			RepResult.respResult(this, Status.CLIENT_ERROR_BAD_REQUEST,
 					"something wrong with the server, please check the url", e);
+			return new StringRepresentation("Cant get enogh parameters!",MediaType.TEXT_PLAIN);
 		}
 		if (pageNum < 1) {
 			pageNum = 1;
@@ -59,10 +62,14 @@ public class FileTypeResource extends ServerResource {
 			params.add(0);
 		}
 		PageView<FileType> pv = new PageView<FileType>(12, pageNum);
-		@SuppressWarnings("serial")
 		QueryResult<FileType> qr = fileTypeServ.getScrollData(
 				pv.getFirstResult(), pv.getMaxresult(), jpql.toString(),
 				params.toArray(), new LinkedHashMap<String, String>() {
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 1L;
+
 					{
 						put("id", "desc");
 					}
@@ -82,28 +89,22 @@ public class FileTypeResource extends ServerResource {
 		return new StringRepresentation(strValu.toString(),
 				MediaType.TEXT_PLAIN);
 	}
-
-	@Post
-	// url:"/filetype/parent/{parentId}"
-	public Representation post(Representation entity) {
+	@Post("wwwForm")
+	public Representation post(Representation entity){
 		System.out.println("entering into FileTypeResource.post method");
-		System.out.println("url:" + getRequest().getHostRef());
 		Representation rep = null;
 		int parentId = 0;
 		String[] argums = null;
 		try {
-			System.out.println(getRequest().getEntityAsText());
 			argums = getRequest().getEntityAsText().split("&");
-			if (StrUtils
-					.areNotBlank(new CharSequence[] { argums[0], argums[1] })) {
+			if (StrUtils.areNotBlank(new CharSequence[] { argums[0], argums[1] })) {
 				parentId = Integer.parseInt(argums[0]);
 				if (parentId < 0) {
 					parentId = 0;
 				}
 			}
 		} catch (NumberFormatException e) {
-			rep = RepResult.respResult(this, Status.CLIENT_ERROR_BAD_REQUEST,
-					"The address is invalid!", null);
+			rep = RepResult.respResult(this, Status.CLIENT_ERROR_BAD_REQUEST,"The address is invalid!", null);
 		}
 		FileType fileType = new FileType(argums[1]);
 		fileType.setTypeDesc(argums[2]);
@@ -112,8 +113,7 @@ public class FileTypeResource extends ServerResource {
 		rep = RepResult.respResult(this, Status.SUCCESS_OK, "Successfully!",
 				null);
 		String url = "/filetypelist.html";
-		System.out.println(url);
-		redirectSeeOther(new Reference(reference, url));
+		redirectPermanent(new Reference(reference, url));
 		return rep;
 	}
 	

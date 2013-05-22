@@ -37,7 +37,7 @@
 		alert("entering into the checkfm function:" + uploadfile);
 		if (uploadfile != "") {
 			var types = [ "jpg", "gif", "bmp", "png", "exe", "doc", "pdf",
-					"txt", "xls", "ppt", "swf" ];
+					"txt", "xls", "ppt", "swf"];
 			var ext = uploadfile.substring(uploadfile.length - 3).toLowerCase();
 			var sing = false;
 			for ( var i = 0; i < types.length; i++) {
@@ -46,7 +46,7 @@
 				}
 			}
 			if (!sing) {
-				alert("only allow pics/flash/word/exe/pdf/txt/xls/ppt;");
+				alert("只允许上传后缀为 pics/flash/word/exe/pdf/txt/xls/ppt/rar/zip的文件！");
 				return false;
 			}
 		}
@@ -78,9 +78,7 @@
 		return false;
 	}
 	function SureSubmit(objForm) {
-		alert("entering into the sureSubmit function!");
 		//for the username value 
-		alert("userName:" + QueryString("username"));
 		var newStr = QueryString("username");
 		if (newStr != null && objForm.userName.value != newStr) {
 			objForm.userName.value = newStr;
@@ -88,6 +86,8 @@
 		if (verifyForm(objForm)) {
 			alert("userName:" + objForm.userName.value);
 			objForm.submit();
+			window.location.href="/uploadfilelist.html?username="+QueryString("username");
+			
 		}
 
 	}

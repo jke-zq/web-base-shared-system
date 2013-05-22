@@ -30,10 +30,10 @@ public class UploadThreadPoolServImp implements UploadThreadPoolService{
 				if(isSaved){
 					//copy
 					//if the dir not exits, pls creates it and cp command.
-					SystemUtil.execCmd(new String[]{cpCmd,fileTempName});
+					SystemUtil.execCmd(new String[]{"/bin/bash", "-c", cpCmd + " " + fileTempName});
 				}
 				//delete
-				SystemUtil.execCmd(new String[]{rmCmd, fileTempName});
+				SystemUtil.execCmd(new String[]{"/bin/bash", "-c", rmCmd + " " + fileTempName});
 			}
 		});
 		
@@ -43,12 +43,11 @@ public class UploadThreadPoolServImp implements UploadThreadPoolService{
 	//how and when to run this method?
 	public  void setServletContext(ServletContext arg0) {
 		System.out.println("the setServletContext is running now!");
-		
 		String temp = null;
 		cxt = arg0;
 		temp = cxt.getRealPath(commandPath);
-		cpCmd= temp + "/cpFile.sh";
-		rmCmd = temp + "/rmFile.sh";
+		cpCmd= temp + "/cpFile.sh ";
+		rmCmd = temp + "/rmFile.sh ";
 	}
 
 	public ServletContext getServCtx() {

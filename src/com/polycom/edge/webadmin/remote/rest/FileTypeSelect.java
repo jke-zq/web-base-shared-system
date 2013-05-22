@@ -35,12 +35,13 @@ public class FileTypeSelect extends ServerResource {
 		params = new Object[]{parentId};
 		FileType childType = FileTypeServ.find(parentId);
 		FileType parentType = childType.getParentType();
-		sb.insert(0, "导航:&gt;&gt;<a href='/rest/filetypesele/" + childType.getId()+ "'>" + childType.getName() + "</a>");
+		sb.insert(0, "&gt;&gt;<a href='" + childType.getId()+ "'>" + childType.getName() + "</a>");
 		while(parentType != null){
 			childType = parentType;
-			sb.insert(0, "导航:&gt;&gt;<a href='/rest/filetypesele/" + childType.getId()+ "'>" + childType.getName() + "</a>");
+			sb.insert(0, "&gt;&gt;<a href='" + childType.getId()+ "'>" + childType.getName() + "</a>");
 			parentType = parentType.getParentType();
 		}
+		sb.insert(0, "导航:");
 		System.out.println(sb.toString());
 		sb.append(SEP_EXTER);
 		
@@ -58,7 +59,7 @@ public class FileTypeSelect extends ServerResource {
 				sb.append("</tr><tr>");
 			}
 			if(fileType.getChildType().size()>0){
-				sb.append("<td ><a href='/rest/filetypesele/" + fileType.getId()+ "'><b>" + fileType.getName() + "</b></a></td>");
+				sb.append("<td ><a href='/fileTypeSelect.html?typeid=" + fileType.getId() + "'><b>" + fileType.getName() + "</b></a></td>");
 			}else{
 				sb.append("<INPUT TYPE=\"radio\" NAME=\"type\" onclick=\"getDicName('"+fileType.getId()+"','"+fileType.getName()+"')\">" + fileType.getName() + "</td>");
 			}

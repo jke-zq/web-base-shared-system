@@ -32,7 +32,7 @@
 							break;
 						case 2:
 							cell.setAttribute("width","20%");
-							cell.innerHTML='<div align="center" >'+values[1]+'<font color=red>(有<a href="/rest/filetype/"'+ values[0] +'"/1">'+values[3]+'</a>个子类)</font></div>';
+							cell.innerHTML='<div align="center" >'+values[1]+'<font color=red>(有<a href="/filetypelist.html?parentid='+ values[0] +'">'+values[3]+'</a>个子类)</font></div>';
 							break;
 						case 3:
 							cell.setAttribute("width","45%");
@@ -75,7 +75,11 @@
 	
 
 	window.onload=function findtypelist() {
+		
 		var url = '/rest/filetype/0/1';
+		if(QueryString("parentid")){
+			url = '/rest/filetype/' + QueryString("parentid") + '/1';
+		}
 		XMLHttp.redirect(url, response);
 	}
 
@@ -159,7 +163,7 @@
 								<td width="10%"><INPUT TYPE="checkbox" NAME="all"
 									onclick="javascript:allselect(this, this.form.fileids)">全选</td>
 								<td width="85%"><input type="button" class="frm_btn"
-									onClick="javascript:deleteFiles(this.form)" value=" 删 除 ">
+									onClick="javascript:deleteFiles(this.form)" value="delete">
 									&nbsp;&nbsp;</td>
 							</tr>
 						</table>

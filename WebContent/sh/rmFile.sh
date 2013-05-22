@@ -14,7 +14,7 @@ fi
 
 if [ -f "$tempFile" ]
 then
-	rm -f "$tempFile"
+	/bin/rm -f "$tempFile"
 else    
 	echo "$tempFile  file does not  exit!"
 	exit 0

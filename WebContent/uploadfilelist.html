@@ -10,53 +10,9 @@
 <script type="text/javascript">
 
 	function addFileList(objStr){
-		var objs = objStr.split("#");
-		if(objs){
-			var tab=document.getElementById("fileList");
-			tab.setAttribute("width","98%");
-			tab.setAttribute("align","center");
-			for(var i=0;i<objs.length;i++){
-				var row = tab.insertRow(i);
-				var values=objs[i].split("&");
-				for(var index=0;index < 7;index++){
-					var cell = row.insertCell(index);
-					cell.setAttribute("bgcolor","f5f5f5");
-					switch(index){
-						case 0:
-							cell.setAttribute("width","8%");
-							cell.innerHTML='<div align="center"><INPUT TYPE="checkbox" NAME="fileids" value='+values[0]+'></div>';
-							break;
-						case 1:
-							cell.setAttribute("width","5%");
-							cell.innerHTML='<div align="center">'+i+'</div>';
-							break;
-						case 2:
-							cell.setAttribute("width","10%");
-							cell.innerHTML='<div align="center" >'+values[3].split("/")[values[3].split("/").length-1]+'</div>';
-							break;
-						case 3:
-							cell.setAttribute("width","40%");
-							cell.innerHTML='<div align="center" >'+values[1]+'</div>';
-							break;
-						case 4:
-							cell.setAttribute("width","5%");
-							cell.innerHTML='<div align="center" ><a href='+values[3]+'><input type="button" value="download"/></a></div>';
-							break;
-						case 5:
-							cell.setAttribute("width","10%");
-							cell.innerHTML='<div align="center" >'+values[4]+'</div>';
-							break;
-						case 6:
-							cell.setAttribute("width","22%");
-							cell.innerHTML='<div align="center" >'+values[2]+'</div>';
-							break;
-						default:
-							cell.innerHTML='<B>sorry, null</B>';
-							break;
-					}
-				}
-			}
-		}
+			var divPoint = document.getElementById("sourcList");
+			alert("addFileList,parameter:" + objStr);
+			divPoint.innerHTML = objStr;
 	}
 
 	function addPageNum(numbers){
@@ -67,10 +23,11 @@
 			if(i != numAray[0]){
 				htmlStr = htmlStr + '<b><font color="#FFFFFF">第' + i + '页</font></b>';
 			}else{
-				htmlStr = htmlStr + '<a href="javascript:topage(' + i + ')" class="a03">第 + i + 页</a>';
+				htmlStr = htmlStr + '<a href="javascript:topage(' + i + ')" class="a03">第' + i + '页</a>';
 			}
 
 		}
+		divpoint.innerHTML = htmlStr;
   　
 	}
 
@@ -82,8 +39,11 @@
 	
 
 	window.onload=function() {
+		var divPoint = document.getElementById("sourcList");
+		divPoint.innerHTML="the data is loading...";
 		var url = '/rest/fileinfo/' + QueryString("username") + '/1';
 		XMLHttp.redirect(url, response);
+		alert("uploadFile.onload.url:" + url);
 	}
 
 	//到指定的分页页面
@@ -118,10 +78,10 @@
 		<input name="method" type="hidden">
 		<table id="fileListTable" width="98%" border="0" cellspacing="1"
 			cellpadding="2" align="center">
-			<tbody>
 				<tr>
 					<td colspan="7" bgcolor="6f8ac4" align="right">
 						<div id="pageNumber"></div>
+						
 					</td>
 				</tr>
 				<tr>
@@ -163,7 +123,8 @@
 					</td>
 				</tr>
 				<tr>
-					<table id="fileList">
+					<table>
+					<div id="sourcList"></div>
 					</table>
 				</tr>
 				<tr>

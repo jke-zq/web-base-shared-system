@@ -53,12 +53,20 @@
 						<lookup-method name="create" bean="FileTypeSelect" />
 					</bean>
 				</entry>
+				<entry key="/download/{fileid}">
+					<bean class="org.restlet.ext.spring.SpringFinder">
+						<lookup-method name="create" bean="DownloadFileSource" />
+					</bean>
+				</entry>
 			</map>
 		</property>
 	</bean>
 
 	<!-- beans referred by routers -->
 	
+	<!-- DownloadFileSource -->
+	<bean id="DownloadFileSource" class="com.polycom.edge.webadmin.remote.rest.DownloadFileSource">
+	</bean>
 	<!-- FileTypeResource -->
 	<bean id="FileTypeResource" class="com.polycom.edge.webadmin.remote.rest.FileTypeResource">
 	</bean>

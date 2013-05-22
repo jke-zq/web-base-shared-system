@@ -48,6 +48,10 @@ function response(XMLHttp,torf) {
 			navigation.innerHTML= "数据正在加载...";
 		}	
 		var url = '/rest/filetypesele/0';
+		if(QueryString("typeid")){
+			url = '/rest/filetypesele/' + QueryString("typeid");
+		}
+
 		XMLHttp.redirect(url, response);
 	}
 

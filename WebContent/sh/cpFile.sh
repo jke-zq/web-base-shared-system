@@ -26,8 +26,9 @@ else
 		echo "$userDir exists!"
 	else
 		echo "$userDir diretory not found!"
-		mkdir $userDir
+		/bin/mkdir $userDir
 	fi
 fi
 
-cp  "$tempFile"  "$userDir/$fileName"
+/bin/cp  "$tempFile"  "$userDir/$fileName"
+ echo $RANDOM...`date`>> /tmp/log.txt 

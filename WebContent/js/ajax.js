@@ -94,11 +94,10 @@ var XMLHttp = {
 				} else {
 					url += "?randnum=" + Math.random();
 				}
-
 				open(method, url, XMLHttpbool);
-				// 设定请求编码方式
-				setRequestHeader("Content-Type",
-						"application/x-www-form-urlencoded; charset=UTF-8");
+				if(data != null){
+					setRequestHeader("Content-Type","application/x-www-form-urlencoded; charset=UTF-8");
+				}
 				send(data);
 				onreadystatechange = function(){
 						if (objXMLHttp.readyState == 4) {
@@ -108,7 +107,6 @@ var XMLHttp = {
 							if (objXMLHttp.status == 201) {
 								callback(objXMLHttp, false);
 							}
-							alert(objXMLHttp.status);
 						}
 				};
 			} catch (e) {
@@ -136,10 +134,11 @@ var XMLHttp = {
 			post[i] = ele[i].value;
 		}
 		var data = post.join("&");
-		this.sendReq("post", url, data, func, false);
+		this.sendReq("POST", url, data, func, false);
 	},
 
 	redirect : function(url,func) {
-		this.sendReq("get", url, null, func, false);
+		this.sendReq("GET", url, null, func, false);
+		alert("get url:" + url);
 	}
 };

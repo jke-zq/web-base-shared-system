@@ -18,6 +18,7 @@ import org.restlet.representation.StringRepresentation;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
+import org.restlet.service.MetadataService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.polycom.edge.webadmin.remote.rest.utils.RepResult;
@@ -41,20 +42,24 @@ public class FileInfoResource extends ServerResource {
 	public FileInfoResource() {
 		getMetadataService().addExtension("multipart",
 				MediaType.MULTIPART_FORM_DATA, true);
+		getMetadataService().addExtension("application",
+				MediaType.APPLICATION_ALL);
 	}
 
-	@Get
+	@Get("application")
 	public Representation get() {
 		Representation rep = null;
 		StringBuffer bf = new StringBuffer();
 		String loginId = null;
 		int pageNum = 1;
-		loginId = (String)getRequest().getAttributes().get("loginId");
+		loginId = (String) getRequest().getAttributes().get("loginId");
+		System.out.println("FileInfoResource.get(),loginId:" + loginId);
 		if (StrUtils.isBlank(loginId)) {
 			loginId = "guest";
 		}
-		String pageNumstr = (String)getRequest().getAttributes().get("pageNum");
-		if(StrUtils.isNotBlank(pageNumstr)) {
+		String pageNumstr = (String) getRequest().getAttributes()
+				.get("pageNum");
+		if (StrUtils.isNotBlank(pageNumstr)) {
 			pageNum = Integer.parseInt(pageNumstr);
 		}
 		// set maxresult =-1 to instate:using 12 default value
@@ -65,8 +70,8 @@ public class FileInfoResource extends ServerResource {
 		List<Object> params = new ArrayList<Object>();
 		jpql.append(" o.visible = ?1 ");
 		params.add(true);
-//		jpql.append(" and o.shared = ?2 ");
-//		params.add(true);
+		// jpql.append(" and o.shared = ?2 ");
+		// params.add(true);
 		jpql.append(" and o.user.name = ?2 ");
 		params.add(loginId);
 		System.out.println("loginId:" + loginId);
@@ -74,13 +79,27 @@ public class FileInfoResource extends ServerResource {
 				pageView.getFirstResult(), pageView.getMaxresult(),
 				jpql.toString(), params.toArray(), orderby));
 		bf.append(pageView.getNumList("&") + ";");
+		bf.append("<table width='98%' align = 'center'>");
 		for (FileInfo file : pageView.getRecords()) {
-			bf.append(file.getId() + "&" + file.getFileDescription() + "&"
-					+ file.getUploadtime().toString() + "&"
-					+ file.getFilePath() + "&" + file.getUser().getName());
-			bf.append("#");
+			bf.append("<tr>");
+			bf.append("<td bgcolor='f5f5f5' width='%8'> <div align='center'><INPUT TYPE='checkbox' NAME='productids' value='"
+					+ file.getId() + "'></div></td>");
+			bf.append("<td bgcolor='f5f5f5' width='%5'> <div align='center'>"
+					+ file.getId() + "</div></td>");
+			bf.append("<td bgcolor='f5f5f5' width='%10'> <div align='center'>"
+					+ file.getFilePath().substring(
+							file.getFilePath().lastIndexOf("/")+1)
+					+ "</div></td>");
+			bf.append("<td bgcolor='f5f5f5' width='%40'> <div align='center'>"
+					+ file.getFileDescription() + "</div></td>");
+			bf.append("<td bgcolor='f5f5f5' width='%5'><div align='center' ><a href='/rest/download/" + file.getId().toString().trim() + "'><input type='button' value='download'/></a></div></td>");
+			bf.append("<td bgcolor='f5f5f5' width='%10'> <div align='center'>"
+					+ file.getUser().getName() + "</div></td>");
+			bf.append("<td bgcolor='f5f5f5' width='%22'> <div align='center'>"
+					+ file.getUploadtime() + "</div></td>");
+			bf.append("</tr>");
 		}
-		bf.deleteCharAt(bf.length() - 1);
+		bf.append("</tr></table>");
 		getResponse().setStatus(Status.SUCCESS_OK);
 		rep = new StringRepresentation(bf.toString(), MediaType.TEXT_PLAIN);
 		System.out.println(bf.toString());
@@ -111,30 +130,42 @@ public class FileInfoResource extends ServerResource {
 						if (fileItem.getName() == null) {
 							if ("userName".equals(fileItem.getFieldName())) {
 								userName = new String(fileItem.get(), "UTF-8");
-								if(StrUtils.isBlank(userName)){
-									userName="guest";
+								if (StrUtils.isBlank(userName)) {
+									userName = "guest";
 								}
-								UserInfo user = userService.getUserByName(userName);
-								if(user != null){
+								UserInfo user = userService
+										.getUserByName(userName);
+								if (user != null) {
 									fileInfo.setUser(user);
-								}else{
-									return RepResult.respResult(this, Status.SERVER_ERROR_NOT_IMPLEMENTED, "failed to save the file into Database!",null);
+								} else {
+									return RepResult
+											.respResult(
+													this,
+													Status.SERVER_ERROR_NOT_IMPLEMENTED,
+													"failed to save the file into Database!",
+													null);
 								}
 							}
-							if("typeid".equals(fileItem.getFieldName())){
-								typeid = Integer.parseInt(new String(fileItem.get(), "UTF-8"));
-								if(typeid<0){
-									typeid=0;
+							if ("typeid".equals(fileItem.getFieldName())) {
+								typeid = Integer.parseInt(new String(fileItem
+										.get(), "UTF-8"));
+								if (typeid < 0) {
+									typeid = 0;
 								}
 								FileType type = typeService.find(typeid);
-								if(type != null){
+								if (type != null) {
 									fileInfo.setFileType(type);
-								}else{
-									return RepResult.respResult(this, Status.SERVER_ERROR_NOT_IMPLEMENTED, "failed to save the file into Database!",null);
+								} else {
+									return RepResult
+											.respResult(
+													this,
+													Status.SERVER_ERROR_NOT_IMPLEMENTED,
+													"failed to save the file into Database!",
+													null);
 								}
 							}
-							if("fileDescription".equals(fileItem
-									.getFieldName())){
+							if ("fileDescription".equals(fileItem
+									.getFieldName())) {
 								fileInfo.setFileDescription(new String(fileItem
 										.get(), "UTF-8"));
 							}
@@ -152,38 +183,47 @@ public class FileInfoResource extends ServerResource {
 							fileItem.write(new File(path, tmpFileName));
 						}
 					}
-					//to check the file is uploaded finished
-					if(StrUtils.isNotBlank(tmpFileName) && new File(path + File.separator + tmpFileName).exists()){
-						//to add the db
-						fileInfo.setFilePath(tmpFileName.replace("#*", File.separator));
+					// to check the file is uploaded finished
+					if (StrUtils.isNotBlank(tmpFileName)
+							&& new File(path + File.separator + tmpFileName)
+									.exists()) {
+						// to add the db
+						fileInfo.setFilePath(tmpFileName.replace("#*",
+								File.separator));
 						System.out.println("fileInfo:" + fileInfo.toString());
 						fileService.save(fileInfo);
-						//failed to save the fileInfo so rollback
-						if(fileService.isSaved(fileInfo.getFilePath())){
-							String url = "/uploadfilelist.html?username=" + userName;
-							redirectPermanent(new Reference(baseRef,url));
-							//copy and delete
-							uploadThrePool.copyAndDel(tmpFileName,true);
-						}else{
-							rep = RepResult.respResult(this, Status.SERVER_ERROR_NOT_IMPLEMENTED, "failed to save the file into Database!",null);
-							//delete
-							uploadThrePool.copyAndDel(tmpFileName,false);
+						// failed to save the fileInfo so rollback
+						if (fileService.isSaved(fileInfo.getFilePath())) {
+							String url = "/uploadfilelist.html?username="
+									+ userName;
+							System.out.println("userName:" + userName);
+							// copy and delete
+							//uploadThrePool.copyAndDel(tmpFileName, true);
+							redirectPermanent(new Reference(baseRef, url));
+						} else {
+							rep = RepResult.respResult(this,
+									Status.SERVER_ERROR_NOT_IMPLEMENTED,
+									"failed to save the file into Database!",
+									null);
+							// delete
+							//uploadThrePool.copyAndDel(tmpFileName, false);
 							return rep;
 						}
 					}
 				} catch (Exception e) {
-					rep = RepResult.respResult(this, Status.CLIENT_ERROR_BAD_REQUEST, e.getMessage(), e);
+					rep = RepResult.respResult(this,
+							Status.CLIENT_ERROR_BAD_REQUEST, e.getMessage(), e);
 				}
 			} else {
-				rep = RepResult.respResult(this, Status.CLIENT_ERROR_BAD_REQUEST,"MultiPart/form-data required",null);
+				rep = RepResult.respResult(this,
+						Status.CLIENT_ERROR_BAD_REQUEST,
+						"MultiPart/form-data required", null);
 			}
 		} else {
-			rep = RepResult.respResult(this, Status.CLIENT_ERROR_BAD_REQUEST,"error,null in the form",null);
+			rep = RepResult.respResult(this, Status.CLIENT_ERROR_BAD_REQUEST,
+					"error,null in the form", null);
 		}
 		return rep;
 	}
 
-//	private Boolean checkCascadeBean(Object o) {
-//		return true;
-//	}
 }
