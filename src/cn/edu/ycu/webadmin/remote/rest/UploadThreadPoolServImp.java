@@ -19,9 +19,7 @@ public class UploadThreadPoolServImp implements UploadThreadPoolService{
 	
 	private ServletContext cxt = null;
 	
-	/* (non-Javadoc)
-	 * @see com.polycom.edge.webadmin.remote.rest.UploadThreadPoolService#copyAndDel(java.lang.String, java.lang.Boolean)
-	 */
+
 	
 	public Boolean copyAndDel(final String fileTempName ,final Boolean isSaved){
 		System.out.println("this is running and this is just for check if running!");

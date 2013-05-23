@@ -40,18 +40,18 @@
 	<!-- beans referred by routers -->
 
 	<!-- FileType resource -->
-	<bean id="FileTypeResource" class="com.polycom.edge.webadmin.remote.rest.FileTypeResource">
+	<bean id="FileTypeResource" class="cn.edu.ycu.webadmin.remote.rest.FileTypeResource">
 	</bean>
 	
 	<!-- FileInfo resource -->
-	<bean id="FileInfoResource" class="com.polycom.edge.webadmin.remote.rest.FileInfoResource">
+	<bean id="FileInfoResource" class="cn.edu.ycu.webadmin.remote.rest.FileInfoResource">
 	</bean>
 		
 	<!-- UserInfo resource -->
-	<bean id="UserInfoResource" class="com.polycom.edge.webadmin.remote.rest.UserInfoResource">
+	<bean id="UserInfoResource" class="cn.edu.ycu.webadmin.remote.rest.UserInfoResource">
 	</bean>
 	<!-- User Zone resource-->
-	<bean id="UserZoneResource" class="com.polycom.edge.webadmin.remote.rest.UserZoneResource">
+	<bean id="UserZoneResource" class="ccn.edu.ycu.webadmin.remote.rest.UserZoneResource">
 	</bean>
 
 

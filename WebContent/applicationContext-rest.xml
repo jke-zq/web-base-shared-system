@@ -65,22 +65,22 @@
 	<!-- beans referred by routers -->
 	
 	<!-- DownloadFileSource -->
-	<bean id="DownloadFileSource" class="com.polycom.edge.webadmin.remote.rest.DownloadFileSource">
+	<bean id="DownloadFileSource" class="cn.edu.ycu.webadmin.remote.rest.DownloadFileSource">
 	</bean>
 	<!-- FileTypeResource -->
-	<bean id="FileTypeResource" class="com.polycom.edge.webadmin.remote.rest.FileTypeResource">
+	<bean id="FileTypeResource" class="cn.edu.ycu.webadmin.remote.rest.FileTypeResource">
 	</bean>
 	<!-- FileTypeSelect -->
-	<bean id="FileTypeSelect" class="com.polycom.edge.webadmin.remote.rest.FileTypeSelect">
+	<bean id="FileTypeSelect" class="cn.edu.ycu.webadmin.remote.rest.FileTypeSelect">
 	</bean>
 	<!-- File resource -->
-	<bean id="FileInfoResource" class="com.polycom.edge.webadmin.remote.rest.FileInfoResource">
+	<bean id="FileInfoResource" class="cn.edu.ycu.webadmin.remote.rest.FileInfoResource">
 	</bean>
 	<!-- UserInfo resource -->
-	<bean id="UserInfoResource" class="com.polycom.edge.webadmin.remote.rest.UserInfoResource">
+	<bean id="UserInfoResource" class="cn.edu.ycu.webadmin.remote.rest.UserInfoResource">
 	</bean>
 	<!-- User Zone -->
-	<bean id="UserZone" class="com.polycom.edge.webadmin.remote.rest.UserZoneResource">
+	<bean id="UserZone" class="cn.edu.ycu.webadmin.remote.rest.UserZoneResource">
 	</bean>
 
 
