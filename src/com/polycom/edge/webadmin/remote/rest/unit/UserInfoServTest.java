@@ -1,9 +1,9 @@
 package com.polycom.edge.webadmin.remote.rest.unit;
 
 
-import com.polycom.edge.webadmin.remote.rest.UserInfo;
-import com.polycom.edge.webadmin.remote.rest.UserInfoServImp;
-import com.polycom.edge.webadmin.remote.rest.UserInfoService;
+import cn.edu.ycu.webadmin.remote.rest.UserInfo;
+import cn.edu.ycu.webadmin.remote.rest.UserInfoServImp;
+import cn.edu.ycu.webadmin.remote.rest.UserInfoService;
 
 public class UserInfoServTest {
 	

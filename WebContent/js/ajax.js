@@ -95,9 +95,7 @@ var XMLHttp = {
 					url += "?randnum=" + Math.random();
 				}
 				open(method, url, XMLHttpbool);
-				if(data != null){
-					setRequestHeader("Content-Type","application/x-www-form-urlencoded; charset=UTF-8");
-				}
+				setRequestHeader("Content-Type","application/x-www-form-urlencoded; charset=UTF-8");
 				send(data);
 				onreadystatechange = function(){
 						if (objXMLHttp.readyState == 4) {

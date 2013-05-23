@@ -18,9 +18,7 @@
 			form.typeDescp.focus();
 			return false;
 		}
-		if (QueryString("parentid")) {
-			form.parentid.value = QueryString("parentid");
-		}
+		
 		return true;
 	}
 
@@ -35,7 +33,14 @@
 	function ajaxSubmit(form) {
 		if (checkfm(form)) {
 			var url = "/rest/childtype";
-			XMLHttp.formSubmit(form, url, response);
+			if (QueryString("parentid")) {
+				form.parentid.value = QueryString("parentid");
+			}
+			form.action = url;
+			form.method="post";
+			alert("parentId:" + form.parentid.value);
+			form.submit();
+			//XMLHttp.formSubmit(form, url, response);
 		}
 		return false;
 	}
@@ -43,7 +48,7 @@
 </head>
 <body bgcolor="#FFFFFF" text="#000000" leftmargin="0" topmargin="0"
 	marginwidth="0" marginheight="0">
-	<form onsubmit="return ajaxSubmit(this);return false">
+	<form onsubmit="return ajaxSubmit(this);return true">
 		<input type="hidden" name="parentid" value="0" />
 		<table width="90%" border="0" cellspacing="2" cellpadding="3"
 			align="center">
