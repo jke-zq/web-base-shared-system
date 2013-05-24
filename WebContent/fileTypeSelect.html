@@ -24,8 +24,6 @@ function getDicName(dicId,strDicName){
 
 function response(XMLHttp,torf) {
 		var strAray=XMLHttp.responseText.LTrim().RTrim().split("*");
-		alert(strAray[0]);
-		alert(strAray[1]);
 		var typecontent = document.getElementById('typecontent');
 		if(typecontent){
 			typecontent.innerHTML= strAray[1];

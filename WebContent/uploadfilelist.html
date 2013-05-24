@@ -11,7 +11,6 @@
 
 	function addFileList(objStr){
 			var divPoint = document.getElementById("sourcList");
-			alert("addFileList,parameter:" + objStr);
 			divPoint.innerHTML = objStr;
 	}
 
@@ -43,7 +42,6 @@
 		divPoint.innerHTML="the data is loading...";
 		var url = '/rest/fileinfo/' + QueryString("username") + '/1';
 		XMLHttp.redirect(url, response);
-		alert("uploadFile.onload.url:" + url);
 	}
 
 	//到指定的分页页面

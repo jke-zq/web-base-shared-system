@@ -34,7 +34,6 @@
 
 	function checkfm(form) {
 		var uploadfile = form.uploadfile.value;
-		alert("entering into the checkfm function:" + uploadfile);
 		if (uploadfile != "") {
 			var types = [ "jpg", "gif", "bmp", "png", "exe", "doc", "pdf",
 					"txt", "xls", "ppt", "swf"];
@@ -58,7 +57,6 @@
 		this.label = label;
 	}
 	function verifyForm(objForm) {
-		alert("entering into verifyForm function");
 		tinyMCE.triggerSave();//手动把iframe的值赋给textarea表单元素
 		var list = new Array(new Formfield("uploadfile", "文件"), new Formfield(
 				"v_type_name", "文件类别"));
@@ -84,9 +82,8 @@
 			objForm.userName.value = newStr;
 		}
 		if (verifyForm(objForm)) {
-			alert("userName:" + objForm.userName.value);
 			objForm.submit();
-			window.location.href="/uploadfilelist.html?username="+QueryString("username");
+			//window.location.href="/uploadfilelist.html?username="+QueryString("username");
 			
 		}
 

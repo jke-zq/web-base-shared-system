@@ -1,0 +1,125 @@
+/*Add by Bai Cuiyan*/
+/*=============================  Reset start =====================================*/
+body,ul,ol,li,p,div,dl,dt,dd,img,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,blockquote,th,td {margin:0;padding:0;}
+body{font-size:14px; font-family: "SimSun","Arial Narrow"; color:#333; background:#fff;}
+a{text-decoration:none;color:#3333CC;}
+a:link{color:#3333CC;}
+a:hover,a:active,a:focus{color:#CC0033; text-decoration:underline;}
+a.flei{text-decoration:none;color:#00004c;}
+a:link.flei{color:#00004c;}
+a:hover.flei,a:active.flei,a:focus.flei{color:#CC0033; text-decoration:underline;}
+a.name_f{text-decoration:none;color:#00007f;}
+a:link.name_f{color:#00007f;}
+a:hover.name_f,a:active.name_f,a:focus.name_f{color:#CC0033; text-decoration:underline;}
+a.qblue{text-decoration:none;color:#1e8fff;}
+a:link.qblue{color:#1e8fff;}
+a:hover.qblue,a:active.qblue,a:focus.qblue{color:#CC0033; text-decoration:underline;}
+a.biaoti{text-decoration:none;color:#333; font-size:14px;}
+a:link.biaoti{color:#333; text-decoration:none; font-size:14px;}
+a:hover.biaoti,a:active.biaoti,a:focus.biaoti{color:#333; text-decoration:underline; font-size:14px;}
+table {border-collapse:collapse;border-spacing:0;}
+fieldset,img {border:0;}
+ol,ul{list-style:none;}
+caption,th{text-align:left;}
+select,input,img,select{vertical-align: middle;}
+input,textarea{outline: none;}
+.clearfix:after{content:".";display:block;height:0;visibility:hidden;clear:both;}
+.clearfix{zoom:1;}
+.clearit{clear:both; height:0; font-size:0; overflow:hidden;}
+.mimg{vertical-align: middle;}
+.bold{font-weight:bold;}
+.left{float:left;}
+.right{float:right;}
+.tali_r{text-align:right;}
+.tali_c{text-align:center;}
+.fs12{font-size:12px;}
+.fs11{font-size:11px;}
+.fhui{color:#999;}
+.mt5{margin-top:5px;}
+.mt10{margin-top:10px;}
+.mt25{margin-top:25px;}
+.mr5{margin-right:5px;}
+.mr10{margin-right:10px;}
+.mr12{margin-right:12px;}
+/*=============================  head footer start =====================================*/
+#header{width:950px; margin:0px auto; padding-bottom:15px;}
+#header .header_top{width:950px;}
+#header .header_top1{width:716px; height:8px; background:url(http://www.sinaimg.cn/pfp/i/z4/img/iask_common.png) repeat-x 0 -218px; line-height:0px; font-size:0px; float:left;}
+#header .header_top2{float:left; width:219px; height:17px; background:url(http://www.sinaimg.cn/pfp/i/z4/img/iask_common.png) no-repeat 0 -269px; font-size:12px; padding:11px 0px 0px 15px;}
+#header .header_top2 a{margin:0px 4px 0px 7px;}
+#header .header_top2 .header_top2a{background:url(http://www.sinaimg.cn/pfp/i/z4/img/iask_images.gif) no-repeat -234px -189px; padding-left:13px;}
+#header .header_top2 .header_top2b{background:url(http://www.sinaimg.cn/pfp/i/z4/img/iask_images.gif) no-repeat 0 -272px; padding-left:13px;}
+#header .header_top2 .header_top2c{background:url(http://www.sinaimg.cn/pfp/i/z4/img/iask_images.gif) no-repeat -234px -272px; padding-left:13px;}
+#header .header_center{width:950px; margin-top:8px;}
+#header .header_center1{float:left; line-height:0px; font-size:0px; padding:0px 16px 0px 11px;}
+#header .header_center1 a{display:block; width:143px; height:48px;}
+#header .header_center2{float:left; padding-top:5px;}
+#header .header_center2 .header_center2a_1{width:9px; height:33px; background:url(http://www.sinaimg.cn/pfp/i/z4/img/iask_common_ceshi.png) no-repeat 0 -231px; float:left; border:0px;line-height:0px; font-size:0px;}
+#header .header_center2 .header_center2a_2{width:6px; height:33px; background:url(http://www.sinaimg.cn/pfp/i/z4/img/iask_common_ceshi.png) no-repeat -24px -231px; float:left; border:0px; line-height:0px; font-size:0px;}
+#header .header_center2 .header_center2a{width:396px; height:14px; background:url(http://www.sinaimg.cn/pfp/i/z4/img/iask_common.png) repeat-x 0 -476px; float:left; border:0px; padding:9px 0px 10px 0px; font-size:14px; }
+#header .header_center2 .header_center2b{width:83px; height:33px; background:url(http://www.sinaimg.cn/pfp/i/z4/img/iask_common_ceshi.png) no-repeat -279px -269px; float:left; border:0px; cursor:pointer;}
+#header .header_center2 .header_center2c{width:12px; height:33px; background:url(http://www.sinaimg.cn/pfp/i/z4/img/iask_common_ceshi.png) no-repeat -35px -231px;; float:left; padding:0px 0px 0px 5px;}
+#header .header_center2 .header_center2c1{width:8px; height:5px; background:url(http://www.sinaimg.cn/pfp/i/z4/img/iask_images_ceshi.gif) no-repeat -51px -242px; line-height:0px; font-size:0px; cursor:pointer; margin-top:15px;}
+#header .header_center2 .header_center2c2{width:8px; height:5px; background:url(http://www.sinaimg.cn/pfp/i/z4/img/iask_images_ceshi.gif) no-repeat -90px -242px; line-height:0px; font-size:0px; cursor:pointer; margin-top:14px;}
+#header .header_center2 .header_center2c4{width:8px; height:5px; background:url(http://www.sinaimg.cn/pfp/i/z4/img/iask_images_ceshi.gif) no-repeat -103px -242px; line-height:0px; font-size:0px; cursor:pointer; margin-top:14px;}
+#header .header_center2 .header_center2c3{width:8px; height:5px; background:url(http://www.sinaimg.cn/pfp/i/z4/img/iask_images_ceshi.gif) no-repeat -64px -242px; line-height:0px; font-size:0px; cursor:pointer; margin-top:15px;}
+#header .header_center2 .header_center2d{width:99px; height:33px; background:url(http://www.sinaimg.cn/pfp/i/z4/img/iask_common.png) no-repeat -370px -269px; float:left; border:0px; cursor:pointer; margin:0px 10px;}
+#header .header_center2 .header_center2e{width:99px; height:33px; background:url(http://www.sinaimg.cn/pfp/i/z4/img/iask_common.png) no-repeat -370px -231px; float:left; border:0px; cursor:pointer;}
+#header .header_center4{ padding:10px 0px 8px 0px; font-size:12px;}
+#header .header_center4 span{margin-right:21px;}
+#header .header_center4a{vertical-align:middle; margin:-4px 5px 0px 5px;}
+*html #header .header_center4a{margin:-4px 2px 0px 2px;}
+#header .header_nav{width:950px; height:32px; background:url(http://www.sinaimg.cn/pfp/i/z4/img/iask_common.png) repeat-x 0 -307px;}
+#header .header_nav1{background:url(http://www.sinaimg.cn/pfp/i/z4/img/iask_common.png) no-repeat 0 -412px; height:29px; padding-top:3px; float:left;}
+#header .header_nav1 li{display:inline; float:left; margin-right:3px;}
+#header .header_nav1 li a{background:url(http://www.sinaimg.cn/pfp/i/z4/img/iask_common.png) no-repeat 0 -344px; height:21px; width:94px; text-align:center; display:inline-block; color:#333; padding-top:8px;}
+#header .header_nav1 li a:hover,#header .header_nav1 li a:active,#header .header_nav1 li a:focus{background:url(http://www.sinaimg.cn/pfp/i/z4/img/iask_common.png) no-repeat 0 -344px; height:21px; width:94px; text-align:center; display:inline-block; color:#333; padding-top:8px; text-decoration:none;}
+#header .header_nav1a{background:url(http://www.sinaimg.cn/pfp/i/z4/img/iask_common.png) no-repeat -99px -344px; height:29px; width:94px; display:inline-block;}
+#header .header_nav1b{background:url(http://www.sinaimg.cn/pfp/i/z4/img/iask_common.png) no-repeat -198px -344px; height:29px; width:94px; display:inline-block;}
+#header .header_nav1c{background:url(http://www.sinaimg.cn/pfp/i/z4/img/iask_common.png) no-repeat -297px -344px; height:29px; width:94px; display:inline-block;}
+#header .header_nav1d{background:url(http://www.sinaimg.cn/pfp/i/z4/img/iask_common.png) no-repeat 0 -378px; height:29px; width:94px; display:inline-block;}
+#header .header_nav1e{background:url(http://www.sinaimg.cn/pfp/i/z4/img/iask_common.png) no-repeat -99px -378px; height:29px; width:94px; display:inline-block;}
+#header .header_nav2{background:url(http://www.sinaimg.cn/pfp/i/z4/img/iask_common.png) no-repeat -270px -269px; height:32px; float:right; width:5px;}
+#header .header_center3{position:relative;}
+#header .h_hide{width:445px; height:254px;  position:absolute; top:40px; left:65px; display:none; z-index:999;}
+#footer{width:950px; margin:0px auto; overflow:hidden; text-align:center; color:#9c9c9c; font-size:12px; line-height:24px; padding-bottom:20px; border-top:1px dashed #ccc; margin-top:30px;}
+#footer a{color:#9c9c9c; text-decoration:underline; margin-left:8px;}
+/*=============================iask 没有搜索框和导航的头文件 =====================================*/
+#header_simple{width:950px; margin:0px auto; border-bottom:1px solid #ffb900;}
+#header_simple .header_simple_lf{width:716px; float:left;}
+#header_simple .header_simple_top1{width:716px; height:8px; background:url(http://www.sinaimg.cn/pfp/i/z4/img/iask_common.png) repeat-x 0 -218px; line-height:0px; font-size:0px; float:left;}
+#header_simple .header_simple_top2{float:left; line-height:0px; font-size:0px; padding:13px 16px 2px 11px;}
+#header_simple .header_simple_top2 a{display:block; width:143px; height:48px;}
+#header_simple .header_simple_ri{background:url(http://www.sinaimg.cn/pfp/i/z4/img/iask_common.png) no-repeat 0 -269px; float:left; font-size:12px; height:17px; padding:11px 0 0 15px; width:219px;}
+#header_simple .header_simple_ri a{margin: 0 4px 0 7px;}
+#header_simple .header_simple_ri1{background: url(http://www.sinaimg.cn/pfp/i/z4/img/iask_images.gif) no-repeat -234px -189px; padding-left:13px;}
+#header_simple .header_simple_ri2{background: url(http://www.sinaimg.cn/pfp/i/z4/img/iask_images.gif) no-repeat 0 -272px; padding-left:13px;}
+#header_simple .header_simple_ri3{background: url(http://www.sinaimg.cn/pfp/i/z4/img/iask_images.gif) no-repeat -234px -272px; padding-left:13px;}
+
+/*Add by Bai Cuiyan*/
+
+
+
+
+
+#searchBoxTwo input.search {
+    font-size: 12px;
+    color: #999;
+    padding: 4px 10px 5px 30px;
+    width: 313px;
+    border: none;
+    background: url(/02_background.png) top left no-repeat;
+}
+
+#searchBoxTwo input.submit {
+    display: none;
+}
+
+
+
+
+
+
+
+
+

@@ -27,38 +27,28 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import cn.edu.ycu.webadmin.remote.rest.utils.RepResult;
 import cn.edu.ycu.webadmin.remote.rest.utils.StrUtils;
 
-public class FileInfoResource extends ServerResource {
+public class SearchResource extends ServerResource {
 
 	@Autowired
 	private FileInfoService fileService;
-	@Autowired
-	private UserInfoService userService;
-	@Autowired
-	private FileTypeService typeService;
-	@Autowired
-	private UploadThreadPoolService uploadThrePool;
-	// private UploadThreadPoolServImp uploadThrePool;
-
-	private String tempPath = "/tempFiles";
+	
 	private volatile Reference baseRef = new Reference("http://localhost:8080");
 
-	public FileInfoResource() {
-		getMetadataService().addExtension("multipart",
-				MediaType.MULTIPART_FORM_DATA, true);
+	public SearchResource() {
+		
 	}
-
-
-	@RequestMapping(value = "/fileinfo/{loginId}/{pageNum}",
+	
+	@RequestMapping(value = "/search/{pageNum}/{keyword}",
             method = { RequestMethod.GET})
 	public Representation get() {
 		Representation rep = null;
 		StringBuffer bf = new StringBuffer();
-		String loginId = null;
-		int pageNum = 1;
-		loginId = (String) getRequest().getAttributes().get("loginId");
-		System.out.println("FileInfoResource.get(),loginId:" + loginId);
-		if (StrUtils.isBlank(loginId)) {
-			loginId = "guest";
+		int pageNum = 0;
+		String keyword = (String) getRequest().getAttributes().get("keyword");
+		System.out.println("keyword:" + keyword);
+		System.out.println("FileInfoResource.get(),keyword:" + keyword);
+		if (StrUtils.isBlank(keyword)) {
+			keyword = "%";
 		}
 		String pageNumstr = (String) getRequest().getAttributes()
 				.get("pageNum");

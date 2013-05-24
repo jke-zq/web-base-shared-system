@@ -137,6 +137,6 @@ var XMLHttp = {
 
 	redirect : function(url,func) {
 		this.sendReq("GET", url, null, func, false);
-		alert("get url:" + url);
+		//alert("get url:" + url);
 	}
 };
