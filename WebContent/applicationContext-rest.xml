@@ -58,29 +58,53 @@
 						<lookup-method name="create" bean="DownloadFileSource" />
 					</bean>
 				</entry>
+				<entry key="/search/{pagenum}/{typeid}">
+					<bean class="org.restlet.ext.spring.SpringFinder">
+						<lookup-method name="create" bean="SearchResource" />
+					</bean>
+				</entry>
+				<entry key="/file/property">
+					<bean class="org.restlet.ext.spring.SpringFinder">
+						<lookup-method name="create" bean="FilePropertySource" />
+					</bean>
+				</entry>
+				<entry key="/user/property/{pageNum}">
+					<bean class="org.restlet.ext.spring.SpringFinder">
+						<lookup-method name="create" bean="UserPropertySource" />
+					</bean>
+				</entry>
 			</map>
 		</property>
 	</bean>
 
 	<!-- beans referred by routers -->
 	
+	<!-- UserPropertySource -->
+	<bean id="UserPropertySource" class="cn.edu.ycu.webadmin.remote.rest.resource.UserPropertySource">
+	</bean>
+	<!-- FilePropertySource -->
+	<bean id="FilePropertySource" class="cn.edu.ycu.webadmin.remote.rest.resource.FilePropertySource">
+	</bean>
+	<!-- SearchResource -->
+	<bean id="SearchResource" class="cn.edu.ycu.webadmin.remote.rest.resource.SearchResource">
+	</bean>
 	<!-- DownloadFileSource -->
-	<bean id="DownloadFileSource" class="cn.edu.ycu.webadmin.remote.rest.DownloadFileSource">
+	<bean id="DownloadFileSource" class="cn.edu.ycu.webadmin.remote.rest.resource.DownloadFileSource">
 	</bean>
 	<!-- FileTypeResource -->
-	<bean id="FileTypeResource" class="cn.edu.ycu.webadmin.remote.rest.FileTypeResource">
+	<bean id="FileTypeResource" class="cn.edu.ycu.webadmin.remote.rest.resource.FileTypeResource">
 	</bean>
 	<!-- FileTypeSelect -->
-	<bean id="FileTypeSelect" class="cn.edu.ycu.webadmin.remote.rest.FileTypeSelect">
+	<bean id="FileTypeSelect" class="cn.edu.ycu.webadmin.remote.rest.resource.FileTypeSelect">
 	</bean>
 	<!-- File resource -->
-	<bean id="FileInfoResource" class="cn.edu.ycu.webadmin.remote.rest.FileInfoResource">
+	<bean id="FileInfoResource" class="cn.edu.ycu.webadmin.remote.rest.resource.FileInfoResource">
 	</bean>
 	<!-- UserInfo resource -->
-	<bean id="UserInfoResource" class="cn.edu.ycu.webadmin.remote.rest.UserInfoResource">
+	<bean id="UserInfoResource" class="cn.edu.ycu.webadmin.remote.rest.resource.UserInfoResource">
 	</bean>
 	<!-- User Zone -->
-	<bean id="UserZone" class="cn.edu.ycu.webadmin.remote.rest.UserZoneResource">
+	<bean id="UserZone" class="cn.edu.ycu.webadmin.remote.rest.resource.UserZoneResource">
 	</bean>
 
 

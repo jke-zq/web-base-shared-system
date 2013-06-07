@@ -1,9 +1,9 @@
 package cn.edu.ycu.webadmin.remote.rest.unit;
 
 
-import cn.edu.ycu.webadmin.remote.rest.UserInfo;
-import cn.edu.ycu.webadmin.remote.rest.UserInfoServImp;
-import cn.edu.ycu.webadmin.remote.rest.UserInfoService;
+import cn.edu.ycu.webadmin.remote.rest.bean.UserInfo;
+import cn.edu.ycu.webadmin.remote.rest.servImp.UserInfoServImp;
+import cn.edu.ycu.webadmin.remote.rest.service.UserInfoService;
 
 public class UserInfoServTest {
 	

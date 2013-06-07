@@ -20,9 +20,10 @@
 		var htmlStr = '<font color="#FFFFFF">当前页:第' + numAray[0] + '页 | 总记录数:' + numAray[1] + '条 | 每页显示:' + numAray[2] + '条 | 总页数:' + numAray[3] + '页</font>';
 		for(var i=numAray[4];i<=numAray[5];i++){
 			if(i != numAray[0]){
-				htmlStr = htmlStr + '<b><font color="#FFFFFF">第' + i + '页</font></b>';
-			}else{
+				
 				htmlStr = htmlStr + '<a href="javascript:topage(' + i + ')" class="a03">第' + i + '页</a>';
+			}else{
+				htmlStr = htmlStr + '<b><font color="#FFFFFF">第' + i + '页</font></b>';
 			}
 
 		}
@@ -62,17 +63,18 @@
 	}
 	
 	function deleteFiles(objform){
-		objform.action='';
-		objform.method.value="delete";
-		objform.submit("width","98%");
+		alert("are you sure to delete the selected files?");
+		objform.username.value=QueryString("username");
+		objform.submit();
 	}
 	
 </script>
 
 
 <body bgcolor="#FFFFFF" text="#000000" marginwidth="0" marginheight="0">
-	<form method="post">
-		<input type="hidden" property="page" /> 
+	<form action="/rest/file/property"  method="post">
+		<input type="hidden" name="page" /> 
+		<input type="hidden" name="username" /> 
 		<input name="method" type="hidden">
 		<table id="fileListTable" width="98%" border="0" cellspacing="1"
 			cellpadding="2" align="center">
@@ -91,7 +93,7 @@
 					
 					<td width="5%" bgcolor="6f8ac4">
 						<div align="center">
-							<font color="#FFFFFF">id</font>
+							<font color="#FFFFFF">isShared</font>
 						</div>
 					</td>
 					<td width="10%" bgcolor="6f8ac4">
@@ -111,7 +113,7 @@
 					</td>
 					<td width="10%" bgcolor="6f8ac4">
 						<div align="center">
-							<font color="#FFFFFF">fileOwner</font>
+							<font color="#FFFFFF">fileType/fileOwner</font>
 						</div>
 					</td>
 					<td width="22%" nowrap bgcolor="6f8ac4">
@@ -130,9 +132,9 @@
 						<table width="100%" border="0" cellspacing="1" cellpadding="3">
 							<tr>
 								<td width="10%"><INPUT TYPE="checkbox" NAME="all"
-									onclick="javascript:allselect(this, this.form.fileids)">全选</td>
+									onclick="javascript:allselect(this, this.form.fileIds)">全选</td>
 								<td width="85%"><input type="button" class="frm_btn"
-									onClick="javascript:deleteFiles(this.form)" value=" 删 除 ">
+									onClick="javascript:deleteFiles(this.form)" value="delete">
 									&nbsp;&nbsp;</td>
 							</tr>
 						</table>

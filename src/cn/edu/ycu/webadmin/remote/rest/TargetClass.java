@@ -8,6 +8,8 @@ import java.util.Arrays;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 
+import cn.edu.ycu.webadmin.remote.rest.resource.URIResource;
+
 
 public class TargetClass {
 	private Object instance = null;

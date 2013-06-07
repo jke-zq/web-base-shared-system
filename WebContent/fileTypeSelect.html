@@ -34,7 +34,9 @@ function response(XMLHttp,torf) {
 		}	
 			
 	}
-	
+function naviClick(link,id){
+	link.href="/fileTypeSelect.html?typeid="+id;
+}	
 
 	window.onload=function findtypelist() {
 		var typecontent = document.getElementById('typecontent');
@@ -49,9 +51,9 @@ function response(XMLHttp,torf) {
 		if(QueryString("typeid")){
 			url = '/rest/filetypesele/' + QueryString("typeid");
 		}
-
 		XMLHttp.redirect(url, response);
 	}
+
 
 </SCRIPT>
 <style>

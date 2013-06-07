@@ -52,17 +52,18 @@
 		if (check() == true) {
 			ajaxSubmit(form);
 		}
+		//onsubmit="exec(this);return false;"
 	}
 </script>
 <body>
 
 	<div align="center">
 		<img src="/pics/index.jpg" alt="file-shared system based on web" />
-		<form action='' onsubmit="exec(this);return false;" >
-		<input id="method" type="hidden" value="login">
-			userName:<input id="userName" type="text" value="userName" onclick="this.value=''"/>
+		<form action='/rest/userinfo' method="post">
+		<input id="method"  name="method" type="hidden" value="login">
+			userName:<input id="userName" name="userName" type="text" value="userName" onclick="this.value=''"/>
 			<div id="userNameInfo" ></div>
-			<br> password:<input id="password" type="text" value="password" onclick="this.value=''" />
+			<br> password:<input id="password"  name="password" type="password" value="password" onclick="this.value=''" />
 			<div id="passwordInfo" ></div>
 			<br> <input type="submit" value="login" />&nbsp;&nbsp;&nbsp;&nbsp;
 			<input type="reset" value="reset" />

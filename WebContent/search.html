@@ -9,6 +9,7 @@
 <link rel="stylesheet" type="text/css" href="./css/iask.css">
 <link href="./css/g.css" rel="stylesheet" type="text/css">
 <script language=JavaScript src="/js/FoshanRen.js"></script>
+<script type="text/javascript" src="/js/ajax.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
 <style>
 #search {
@@ -28,12 +29,62 @@
 }
 
 </style>
+<script type="text/javascript">
+	function addPageNum(numbers){
+		var numAray = numbers.split("&");
+		var divpoint = document.getElementById("pageNumber");
+		var htmlStr = '<font color="#FFFFFF">当前页:第' + numAray[0] + '页 | 总记录数:' + numAray[1] + '条 | 每页显示:' + numAray[2] + '条 | 总页数:' + numAray[3] + '页</font>';
+		for(var i=numAray[4];i<=numAray[5];i++){
+			if(i != numAray[0]){
+				
+				htmlStr = htmlStr + '<a href="javascript:topage(' + i + ')" class="a03">第' + i + '页</a>';
+			}else{
+				htmlStr = htmlStr + '<b><font color="#FFFFFF">第' + i + '页</font></b>';
+			}
+	
+		}
+		divpoint.innerHTML = htmlStr;
+	
+	}
+	function addFileList(objectStr){
+		var divPoint = document.getElementById("resultlist");
+		divPoint.innerHTML = objectStr;
+		}
+	function response(XMLHttp,torf) {
+		var strAray=XMLHttp.responseText.LTrim().RTrim().split(";;");
+		addPageNum(strAray[0]);
+		addFileList(strAray[1]);
+	}
+	//到指定的分页页面
+	function topage(page){
+		 var form = document.getElementById("searchForm");
+		 form.pagenum.value=page;
+	     XMLHttp.search(form,"/rest/search", response);
+	}
 
+	function submitForm(form){
+		XMLHttp.search(form,"/rest/search", response);
+	}
+	window.onload=function(){
+		var form = document.getElementById("searchForm");
+		if(QueryString("typeid") > 0){
+		  form.typeid.value=QueryString("typeid");
+		}
+		if(QueryString("typename") != null){
+			  form.v_type_name.value=QueryString("typename");
+		}
+		if(QueryString("keyword") != null){
+			  form.keyword.value=QueryString("keyword");
+		}
+		submitForm(form);
+	}
+</script>
 </head>
 <body>
 	<div id="wrap">
-		<form action="?" method="get">
+		<form action="" method="get" accept-charset="UTF-8" id="searchForm" onsubmit="submitForm(this);return false;">
 		<input type="hidden" id="typeid" name="typeid" value="0" />
+		<input type="hidden" id="pagenum" name="pagenum" value="1" />
 			<div class="ask_show1">
 	             <h2><a href="" disable=true class="biaoti">检索关键字：</a></h2>
 	        </div>
@@ -78,30 +129,14 @@
 		<div class="ask_show1">
              <h2><a href="" disable=true class="biaoti">检索结果如下：</a></h2>
         </div>
-   	    <div class="ask_show2 clearfix" id="resultlist">
+   	    <div class="ask_show2 clearfix" >
 
-   	    
-<div style="float:left;">
-<table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="r1">
-	<div class="cb"><img src="./pics/doc.gif" alt="Word文档" width="16" height="14" align="absmiddle"> <a href="http://ishare.iask.sina.com.cn/f/20413063.html" target="_blank" class="f16"><span style="color:#C03">JAVA</span></a> </div>
-	教育教学理论基础知识.txt 中学教师资格考试教育心理学复习辅导资料及答案 《教育学》复习资料-名词解释、分析、解答题).txt
-	<div class="c9">所属分类：<a href="http://ishare.iask.sina.com.cn/c/1816.html" class="c9ul">教育资料</a>&nbsp;&gt;&nbsp;<a href="http://ishare.iask.sina.com.cn/c/1817.html" class="c9ul">高等教育</a> 上传时间:2011-10-29 20:33:40</div>
-	<span style="width:50em;"><span class="gray">星级:<img src="./java - 共享资料_files/gx_xing.gif"><img src="./java - 共享资料_files/gx_hx.gif"> 下载需积分1分 | 下载:0 次 | 大小:51KB | 共享者：<a href="http://iask.sina.com.cn/u/2501233960/ish" class="gray">哈利模特</a></span> <span class="pl10"></span></span><div style="display:none" id="f20413063"></div>
-</td></tr></tbody></table>
-</div>
+ 
+						<div id="pageNumber" style="background-color:6f8ac4; overflow:visible;" align="right" ></div>
+						
 
-
-   	    	
-<div style="float:left;">
-<table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="r1">
-	<div class="cb"><img src="./java - 共享资料_files/doc.gif" alt="Word文档" width="16" height="14" align="absmiddle"> <a href="http://ishare.iask.sina.com.cn/f/20413063.html" target="_blank" class="f16"><span style="color:#C03">JAVA</span></a> </div>
-	教育教学理论基础知识.txt 中学教师资格考试教育心理学复习辅导资料及答案 《教育学》复习资料-名词解释、分析、解答题).txt
-	<div class="c9">所属分类：<a href="http://ishare.iask.sina.com.cn/c/1816.html" class="c9ul">教育资料</a>&nbsp;&gt;&nbsp;<a href="http://ishare.iask.sina.com.cn/c/1817.html" class="c9ul">高等教育</a> 上传时间:2011-10-29 20:33:40</div>
-	<span style="width:50em;"><span class="gray">星级:<img src="./java - 共享资料_files/gx_xing.gif"><img src="./java - 共享资料_files/gx_hx.gif"> 下载需积分1分 | 下载:0 次 | 大小:51KB | 共享者：<a href="http://iask.sina.com.cn/u/2501233960/ish" class="gray">哈利模特</a></span> <span class="pl10"></span></span><div style="display:none" id="f20413063"></div>
-</td></tr></tbody></table>
-</div>
-
-
+						<div  align="right" id="resultlist">there is no result to show...</div>
+						
 
 
 		</div>

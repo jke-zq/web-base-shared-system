@@ -1,10 +1,15 @@
 
 .ask_show{width:467px; overflow:hidden; border:1px solid #d7e4f8; margin-top:10px; padding-top:1px;}
-.ask_show1{ height:30px; background:url(http://www.sinaimg.cn/pfp/i/z4/img/iask_common.png) repeat-x 0 0; padding:0px 9px;}
+.ask_show1{ height:30px; background:url(../../images/iask_common.png) repeat-x 0 0; padding:0px 9px;}
 .ask_show1 h2{float:left; line-height:30px;}
 .ask_show1 a{float:right; font-size:12px; margin-top:10px;}
 .ask_show1 h2 a{font-size:14px; margin-top:0px; float:left;}
-.ask_show2{padding:0px 11px 0px 17px; width:439px; margin:4px 0px 3px 0px;}
+
+.ask_show0{ height:30px; padding:0px 9px;}
+.ask_show0 h2{float:left; line-height:30px;}
+.ask_show0 a{float:right; font-size:12px; margin-top:10px;}
+.ask_show0 h2 a{font-size:14px; margin-top:0px; float:left;}
+.ask_show2{padding:0px 11px 0px 17px; width:789px; margin:4px 0px 3px 0px;}
 .ask_show2 ul li{display:inline; float:left; line-height:26px;}
 .ask_show2 .ask_show2a{width:77px;}
 .ask_show2 .ask_show2b{width:302px;}

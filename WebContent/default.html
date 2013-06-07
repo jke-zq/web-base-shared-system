@@ -9,7 +9,7 @@
 	window.onload = function() {
 		if (QueryString("username")) {
 			banner.location = "/top.html?username=" + QueryString("username");
-			menuframe.location = "/menu.html?username=" + QueryString("username");
+			menuframe.location = "/defaultmenu.html?username=" + QueryString("username");
 		}
 	}
 </script>
@@ -19,7 +19,7 @@
 	<frame id="topLinks" name="banner" scrolling="no" noresize
 		target="contents" src="/top.html" marginwidth="0" marginheight="0" />
 	<frameset cols="168,*">
-		<frame name="menuframe" target="mainframe" src="/menu.html"
+		<frame name="menuframe" target="mainframe" src="/defaultmenu.html"
 			scrolling="no" marginwidth="0" marginheight="0" />
 		<frame name="mainframe" scrolling="auto" noresize src="/404.html"
 			marginwidth="0" marginheight="0" />

@@ -61,7 +61,7 @@
 	function exec(form) {
 		clear();
 		if (check() == true) {
-			ajaxSubmit(form);
+			return true;
 		}
 	}
 </script>
@@ -69,11 +69,11 @@
 
 	<div align="center">
 		<img src="/pics/index.jpg" alt="file-shared system based on web" />
-		<form action="" onsubmit="exec(this);return false;">
-		<input id="method" type="hidden" value="register">
-			userName:<input id="userName" type="text" value="userName" />
+		<form action="/rest/userinfo"  method="post" onsubmit="exec(this);">
+		<input id="method" name="method" type="hidden" value="register">
+			userName:<input id="userName" name="userName" type="text" value="userName" />
 			<div id="userNameInfo"></div>
-			<br> password:<input id="password" type="text" value="password" />
+			<br> password:<input id="password" name="password" type="password" value="password" />
 			<div id="passwordInfo"></div>
 			<br> confirm:<input id="confirmPass" type="text"
 				value="confirmPass" />

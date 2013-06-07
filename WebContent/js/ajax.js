@@ -138,5 +138,10 @@ var XMLHttp = {
 	redirect : function(url,func) {
 		this.sendReq("GET", url, null, func, false);
 		//alert("get url:" + url);
+	},
+	search : function(from,url,func) {
+		var url2= url+"/"+ from.pagenum.value+"/"+from.typeid.value+"?keyword="+from.keyword.value;
+		this.sendReq("GET", url2, null, func, false);
+		//alert("get url:" + url);
 	}
 };
