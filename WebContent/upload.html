@@ -8,6 +8,15 @@
 <script language=JavaScript src="/js/FoshanRen.js"></script>
 <script type="text/javascript" src="/js/ajax.js"></script>
 <script language="Javascript" type="text/javascript">
+var file = null;
+var varUrl = "/rest/uploadfile";
+var form = document.getElementById('form');
+var hasUpload=0;
+var simultaneousUploads=0;
+var progressBar = null;
+var progressBarText = null;
+var slices=0;
+var ids=null;
 	tinyMCE
 			.init({
 				language : "zh_cn",
@@ -81,19 +90,111 @@
 		if (newStr != null && objForm.userName.value != newStr) {
 			objForm.userName.value = newStr;
 		}
+		file = document.getElementById('fileToUpload').files[0];
+		if(file.size <=0){
+			alter("the file is 0 byte.");
+			return;
+		}
 		if (verifyForm(objForm)) {
-			objForm.submit();
+			XMLHttp.uploadFileDetails(objForm,varUrl,uploadfileSlice,file);
+			//objForm.submit();
 			//window.location.href="/uploadfilelist.html?username="+QueryString("username");
-			
+		}
+	}
+	function uploadfileSlice(XMLHttp,redireck) {
+		var numbers = XMLHttp.responseText.LTrim().split("#");
+		switch(numbers[0]){
+	      case '-1':
+	    	  alert("Something wrong happened, try again!");
+	    	  return;
+	      case '0':
+	    	  alert("This file has been uploaded!");
+	        return;
+	      default:
+	    	  onDownloadStep(6);
+	        return chunck(numbers[0], numbers[1]);
+	      }
+	}
+	function chunck(size,Ids) {
+		ids = Ids.split("&");//from id=0 on;
+		slices = ids.length;
+		var blob = null;//  分片数据的载体Blob对象
+		var func   = ($.fileObj.file.slice ? 'slice' : ($.fileObj.file.mozSlice ? 'mozSlice' : ($.fileObj.file.webkitSlice ? 'webkitSlice' : 'slice'))),
+        bytes  = null;
+		var data;
+		data.append();
+		var start=0;
+		var end=0;
+		var filesize = file.size;
+		while(slices){
+			for(var i=0;i<ids.length;i++){
+				if(simultaneousUploads>=3){
+					break;
+				};
+				if(ids[i]==-1){
+					continue;
+				}
+				data = new FormData();
+				start = ids[i]*size;
+				end = start+size;
+				bytes = file[func](start,end > filesize ? filesize:end )
+				data.append("fileToUpload", bytes);
+				XMLHttp.uploadFileSlice(form, varUrl, afterUploadSlice, data, file, ids[i]);
+				simultaneousUpload++;
+				hasUpload = hasUpload+end-start;
+				
+			}
+		}
+		
+	}
+	afterUploadSlice(XMLHttp,redireck){
+		if(objXMLHttp.status == 200){
+			simultaneousUploads--;
+			slices--;
+			ids[XMLHttp.responseText.LTrim().split("#")]=-1;
+			//proess;
+			var complete = Math.round(hasUpload/(file.size))*100;
+		　　 //var progress = document.getElementById('uploadprogress');
+		　　 //progress.value = complete;
+			onProgress(complete);
+		}
+	}
+	
+	
+	function onProgress(PercentCurrent){       
+		   //Max width of progress bar 
+		   var progressBarWidth = 200;
+		   //Show download progress 
+		   //Set width of progress bar 
+		   progressBar.style.width = Math.round(PercentCurrent/progressBarWidth*2) + "px";
+		   //Set percentage text
+		   progressBarText.innerHTML = PercentCurrent + "&#37;";
 		}
 
-	}
+		function onDownloadStep(Step) {   
+			progressBar = document.getElementById("ProgressBar");
+		    progressBarText = document.getElementById("ProgressBarText"); 
+		   switch(Step)
+		   {
+		      case 6: // File download is about to start
+		         //Show zero width progress bar
+		         progressBar.style.display = "block";
+		         progressBarText.style.display = "block";
+		         progressBar.style.width = "0px";
+		         break;
+		      case 7: // File download has been finished
+		         //Hide progress bar
+		         progressBar.style.display = "none";
+		         progressBarText.style.display = "none";
+		         break;
+		   }
+		}       
 </script>
 </head>
 
 <body bgcolor="#FFFFFF" text="#000000" leftmargin="0" topmargin="0"
 	marginwidth="0" marginheight="0">
-	<form id="form" action="/rest/uploadfile" method="post"
+	<form id="form" name="form" action="/rest/uploadfile" method="post"
 		accept-charset="UTF-8" enctype="multipart/form-data">
 		<input type="hidden" id="userName" name="userName" value="guest" /> <input
 			type="hidden" id="typeid" name="typeid" value="0" />
@@ -129,6 +230,16 @@
 				</td>
 				<td width="75%"><textarea name="fileDescription" cols="80"
 						rows="23"></textarea></td>
+			</tr>
+			<tr bgcolor="f5f5f5">
+				<td colspan="2">
+					<div style="width:200px; background-color:lightgrey">
+ 						<div id="ProgressBar" style="width:0px; height:20px; background-color:blue; display:none;">
+	      					<span id="ProgressBarText" style="width:200px; display:none; color:white; margin-left:90px;">
+	      					</span>
+   						</div>
+					</div>
+				</td>
 			</tr>
 			<tr bgcolor="f5f5f5">
 				<td colspan="2">

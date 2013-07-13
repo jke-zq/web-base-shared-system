@@ -82,7 +82,7 @@ var XMLHttp = {
 	},
 
 	// 发送请求(方法[post,get], 地址, 数据, 回调函数 , 异步)
-	sendReq : function(method, url, data, callback, XMLHttpbool) {
+	sendReq : function(method, url, data, callback, XMLHttpbool, oauth) {
 		if (!XMLHttpbool)
 			XMLHttpbool = true;
 		var objXMLHttp = this._getInstance();
@@ -95,7 +95,12 @@ var XMLHttp = {
 					url += "?randnum=" + Math.random();
 				}
 				open(method, url, XMLHttpbool);
-				setRequestHeader("Content-Type","application/x-www-form-urlencoded; charset=UTF-8");
+				if("post"==method.toLowerCase()){
+					setRequestHeader("Content-Type","multipart/form-data; charset=UTF-8");
+				}else{
+					setRequestHeader("Content-Type","application/x-www-form-urlencoded; charset=UTF-8");
+				}
+				ssetRequestHeader('Authorization', auth);
 				send(data);
 				onreadystatechange = function(){
 						if (objXMLHttp.readyState == 4) {
@@ -132,16 +137,32 @@ var XMLHttp = {
 			post[i] = ele[i].value;
 		}
 		var data = post.join("&");
-		this.sendReq("POST", url, data, func, false);
+		this.sendReq("POST", url, data, func, false, null);
+	},
+	uploadFileDetails : function(form, url, func, file) {
+		if (typeof form != "object") {
+			var form = document.getElementById(form);
+//			alert("there is something wrong with the js!");
+		}
+		url=url + "?fileName=" + file.name +"&fileSize="+file.size+"&fileType="+form.typeid.value+"&fileDesp="+form.fileDescription.value;
+		this.sendReq("POST", url, data, func, false, form.userName.value);
+	},
+	uploadFileSlice : function(form, url, func, bytes, file, sliceId) {
+		if (typeof form != "object") {
+			var form = document.getElementById(form);
+//			alert("there is something wrong with the js!");
+		}
+		url=url + "?fileName=" + file.name +"&fileSize="+file.size+"&sliceId="+sliceId;
+		this.sendReq("POST", url, bytes, func, false, form.userName.value);
 	},
 
 	redirect : function(url,func) {
-		this.sendReq("GET", url, null, func, false);
+		this.sendReq("GET", url, null, func, false, null);
 		//alert("get url:" + url);
 	},
 	search : function(from,url,func) {
 		var url2= url+"/"+ from.pagenum.value+"/"+from.typeid.value+"?keyword="+from.keyword.value;
-		this.sendReq("GET", url2, null, func, false);
+		this.sendReq("GET", url2, null, func, false, null);
 		//alert("get url:" + url);
 	}
 };
