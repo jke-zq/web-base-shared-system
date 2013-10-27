@@ -144,8 +144,8 @@ var XMLHttp = {
 			var form = document.getElementById(form);
 //			alert("there is something wrong with the js!");
 		}
-		url=url + "?fileName=" + file.name +"&fileSize="+file.size+"&fileType="+form.typeid.value+"&fileDesp="+form.fileDescription.value;
-		this.sendReq("POST", url, data, func, false, form.userName.value);
+		url=url + "?fileName=" + file.name +"&fileSize="+file.size+"&fileType="+form.typeid.value+"&fileDesp="+form.fileDescription.value+"&slicedId=-1";
+		this.sendReq("GET", url, data, func, false, form.userName.value);
 	},
 	uploadFileSlice : function(form, url, func, bytes, file, sliceId) {
 		if (typeof form != "object") {
@@ -155,7 +155,6 @@ var XMLHttp = {
 		url=url + "?fileName=" + file.name +"&fileSize="+file.size+"&sliceId="+sliceId;
 		this.sendReq("POST", url, bytes, func, false, form.userName.value);
 	},
-
 	redirect : function(url,func) {
 		this.sendReq("GET", url, null, func, false, null);
 		//alert("get url:" + url);

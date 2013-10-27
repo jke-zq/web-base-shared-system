@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>使用WebSocket实现断点续传文件</title>
+    <meta charset="utf-8">
+</head>
+
+<script type="text/javascript" src="./js/demo.js"></script>
+
+<body onload="init();">
+
+<button onclick="webSocketConn();">创建连接</button>(step1)
+
+<div class="row">
+      <label for="fileToUpload">Select a File to Upload</label>
+      <input type="file" name="fileToUpload" id="fileToUpload" onchange="fileSelected();"/>(step2)
+</div>
+<div id="fileName"></div>
+<div id="fileSize"></div>
+<div id="fileType"></div>
+<div class="row">
+    <button onclick="sendFileName();uploadFile()">上传</button>(step3)
+    <button onclick="pauseUpload()">暂停</button>
+    &nbsp;<label id="progressNumber"></label>
+</div>
+<div id="msg" style="max-height: 400px; overflow:auto;min-height: 100px;">
+</div>
+</body>
+</html>

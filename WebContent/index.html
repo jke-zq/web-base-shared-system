@@ -1,0 +1,131 @@
+<!DOCTYPE >
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
+  <title>
+  </title> <meta name="description" content="">
+  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<link rel="stylesheet" type="text/css" href="./css/iask_common.css">
+<link rel="stylesheet" type="text/css" href="./css/iask.css">
+<link href="./css/g.css" rel="stylesheet" type="text/css">
+<script language=JavaScript src="/js/FoshanRen.js"></script>
+<script type="text/javascript" src="/js/ajax.js"></script>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+#search {
+    font-size: 12px;
+    color: #999;
+    padding: 4px 10px 5px 30px;
+    width: 313px;
+    border: none;
+    background: url(./pics/02_background.png) top left no-repeat;
+}
+#keyword {
+    font-size: 12px;
+    color: #999;
+    padding: 4px 10px 5px 30px;
+    width: 313px;
+    border: none;
+}
+
+</style>
+<script type="text/javascript">
+	function addPageNum(numbers){
+		var numAray = numbers.split("&");
+		var divpoint = document.getElementById("pageNumber");
+		var htmlStr = '<font color="#FFFFFF">当前页:第' + numAray[0] + '页 | 总记录数:' + numAray[1] + '条 | 每页显示:' + numAray[2] + '条 | 总页数:' + numAray[3] + '页</font>';
+		for(var i=numAray[4];i<=numAray[5];i++){
+			if(i != numAray[0]){
+				
+				htmlStr = htmlStr + '<a href="javascript:topage(' + i + ')" class="a03">第' + i + '页</a>';
+			}else{
+				htmlStr = htmlStr + '<b><font color="#FFFFFF">第' + i + '页</font></b>';
+			}
+	
+		}
+		divpoint.innerHTML = htmlStr;
+	
+	}
+	function addFileList(objectStr){
+		var divPoint = document.getElementById("resultlist");
+		divPoint.innerHTML = objectStr;
+		}
+	function response(XMLHttp,torf) {
+		var strAray=XMLHttp.responseText.LTrim().RTrim().split(";;");
+		addPageNum(strAray[0]);
+		addFileList(strAray[1]);
+	}
+
+	function submitForm(form){
+		//XMLHttp.search(form,"/rest/search", response);
+		window.location.href="/search.html?keyword=" + form.keyword.value + "&typeid=" + form.typeid.value + "&typename=" + form.v_type_name.value;
+	}
+</script>
+</head>
+<body>
+<br>
+<br>
+<br><h1>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;one world shared system</h1>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<center>
+	<div id="wrap">
+		<form action="" method="get" accept-charset="UTF-8" onsubmit="submitForm(this);return false;">
+		<input type="hidden" id="typeid" name="typeid" value="0" />
+		<center>
+			<div class="ask_show0">
+	             <h2><a href="" disable=true class="biaoti">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;检索关键字：</a></h2>
+	        </div>
+	    </center>
+	   	    <div class="ask_show2 clearfix">
+	   	    	<div id="searchBoxOne">
+					 	
+					  	<table id="searchtd">
+						  	<tr>
+							  	<td>
+								    <div id="search" >
+								    	<input type="text" id="keyword" name="keyword" style="width:90%;border-top:0px;border-left:0px;border-right:0px;">
+								    </div>
+							    </td>
+							    <td>
+							    <input type="submit" value="检索" />
+								</td>
+							</tr>
+						</table>
+					  
+				</div>
+			</div>
+			<div class="ask_show0">
+	             <h2><a href="" disable=true class="biaoti">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;选择文件类别：</a></h2>
+	        </div>
+	   	    <div class="ask_show2 clearfix">
+
+	   	    	<table id="keywordtd">
+						  	<tr>
+							  	<td>
+							  		<div id="keyword">
+								    <input type="text" id="v_type_name" name="v_type_name"  style="width:90%;border-top:0px;border-left:0px;border-right:0px;" disabled="true" /> 
+								    </div>
+							    </td>
+							    <td>
+							     <input type="button" name="select"  value="选择..."  onClick="javaScript:winOpen('/fileTypeSelect.html','列表',600,400)"/>
+								</td>
+							</tr>
+						</table>
+
+			</div>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<a href="/login.html" ><input type="button" value="login"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/register.html"><input type="button" value="register"></a>
+		</form>
+
+	</div>
+</center>
+</body></html>

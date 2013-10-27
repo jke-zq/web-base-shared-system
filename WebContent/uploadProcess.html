@@ -1,0 +1,79 @@
+<!DOCTYPE>
+<html>
+<head>
+<title> 类别选择 </title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="/css/vip.css" type="text/css">
+<SCRIPT language=JavaScript src="/js/FoshanRen.js"></SCRIPT>
+<script type="text/javascript" src="/js/ajax.js"></script>
+<SCRIPT language=JavaScript>
+function checkIt(){
+	var objForm = document.forms[0];
+	var form = opener.document.forms[0];
+	if (form){
+		form.typeid.value = objForm.dicId.value;
+		form.v_type_name.value = objForm.dicName.value;
+	}
+	window.close();
+}
+function getDicName(dicId,strDicName){
+	var objForm = document.forms[0];
+	objForm.dicId.value = dicId;
+	objForm.dicName.value = strDicName;
+}
+
+function response(XMLHttp,torf) {
+		var strAray=XMLHttp.responseText.LTrim().RTrim().split("*");
+		var typecontent = document.getElementById('typecontent');
+		if(typecontent){
+			typecontent.innerHTML= strAray[1];
+		}
+		var navigation = document.getElementById('navigation');
+		if(navigation){
+			navigation.innerHTML= strAray[0].RTrim();
+		}	
+			
+	}
+function naviClick(link,id){
+	link.href="/fileTypeSelect.html?typeid="+id;
+}	
+
+	window.onload=function findtypelist() {
+		var typecontent = document.getElementById('typecontent');
+		if(typecontent){
+			typecontent.innerHTML= "数据正在加载...";
+		}
+		var navigation = document.getElementById('navigation');
+		if(navigation){
+			navigation.innerHTML= "数据正在加载...";
+		}	
+		var url = '/rest/filetypesele/0';
+		if(QueryString("typeid")){
+			url = '/rest/filetypesele/' + QueryString("typeid");
+		}
+		XMLHttp.redirect(url, response);
+	}
+
+
+</SCRIPT>
+<style>
+<!--
+.inputText{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #666666;
+	border: 1px solid #999999;
+}
+body {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 12px;
+	color: #666666;
+}
+-->
+</style>
+</head>
+
+<body>
+<progress id="uploadprogress" min="0" max="100" value="0">0</progress>
+</body>
+</html>

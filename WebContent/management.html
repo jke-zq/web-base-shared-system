@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>文件共享系统</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<script type="text/javascript" src="/js/ajax.js"></script>
+<script type="text/javascript">
+	window.onload = function() {
+		if (QueryString("username")) {
+			banner.location = "/top.html?username=" + QueryString("username");
+			menuframe.location = "/menu.html?username=" + QueryString("username");
+		}
+	}
+</script>
+</head>
+
+<frameset framespacing="0" border="0" rows="60,*,15" frameborder="0">
+	<frame id="topLinks" name="banner" scrolling="no" noresize
+		target="contents" src="/top.html" marginwidth="0" marginheight="0" />
+	<frameset cols="168,*">
+		<frame name="menuframe" target="mainframe" src="/menu.html"
+			scrolling="no" marginwidth="0" marginheight="0" />
+		<frame name="mainframe" scrolling="auto" noresize src="/404.html"
+			marginwidth="0" marginheight="0" />
+	</frameset>
+	<frame name="menuframe" target="mainframe" src="/end.html"
+		scrolling="no" marginwidth="0" marginheight="0" />
+</frameset>
+<noframes></noframes>
+</html>

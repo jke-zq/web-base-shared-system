@@ -1,0 +1,144 @@
+<!DOCTYPE>
+<html>
+<head>
+<title>上传文件显示</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="/css/vip.css" type="text/css">
+<script type="text/javascript" src="/js/FoshanRen.js"></script>
+<script type="text/javascript" src="/js/ajax.js"></script>
+</head>
+<script type="text/javascript">
+
+	function addFileList(objStr){
+			var divPoint = document.getElementById("sourcList");
+			divPoint.innerHTML = objStr;
+	}
+
+	function addPageNum(numbers){
+		var numAray = numbers.split("&");
+		var divpoint = document.getElementById("pageNumber");
+		var htmlStr = '<font color="#FFFFFF">当前页:第' + numAray[0] + '页 | 总记录数:' + numAray[1] + '条 | 每页显示:' + numAray[2] + '条 | 总页数:' + numAray[3] + '页</font>';
+		for(var i=numAray[4];i<=numAray[5];i++){
+			if(i != numAray[0]){
+				
+				htmlStr = htmlStr + '<a href="javascript:topage(' + i + ')" class="a03">第' + i + '页</a>';
+			}else{
+				htmlStr = htmlStr + '<b><font color="#FFFFFF">第' + i + '页</font></b>';
+			}
+
+		}
+		divpoint.innerHTML = htmlStr;
+  　
+	}
+
+	function response(XMLHttp,torf) {
+		var strAray=XMLHttp.responseText.LTrim().RTrim().split(";");
+		addPageNum(strAray[0]);
+		addFileList(strAray[1]);		
+	}
+	
+
+	window.onload=function() {
+		var divPoint = document.getElementById("sourcList");
+		divPoint.innerHTML="the data is loading...";
+		var url = '/rest/user/property/1';
+		XMLHttp.redirect(url, response);
+	}
+
+	//到指定的分页页面
+	function topage(page){
+		var url = '/rest/user/property' + page;
+		XMLHttp.redirect(url, response);
+	}
+	
+	function allselect(allobj,items){
+	    var state = allobj.checked;
+	    if(items.length){
+	    	for(var i=0;i<items.length;i++){
+	    		if(!items[i].disabled) items[i].checked=state;
+	    	}
+	    }else{
+	    	if(!items.disabled) items.checked=state;
+	    }
+	}
+	
+	function deleteFiles(objform){
+		objform.action="/rest/user/property/"+objform.page.value;
+		objform.submit();
+	}
+	
+</script>
+
+
+<body bgcolor="#FFFFFF" text="#000000" marginwidth="0" marginheight="0">
+	<form action=""  method="post">
+		<input type="hidden" name="page"  value="1"/> 
+		<table id="fileListTable" width="98%" border="0" cellspacing="1"
+			cellpadding="2" align="center">
+				<tr>
+					<td colspan="7" bgcolor="6f8ac4" align="right">
+						<div id="pageNumber"></div>
+						
+					</td>
+				</tr>
+				<tr>
+					<td width="8%" bgcolor="6f8ac4">
+						<div align="center">
+							<font color="#FFFFFF">chose</font>
+						</div>
+					</td>
+					
+					<td width="5%" bgcolor="6f8ac4">
+						<div align="center">
+							<font color="#FFFFFF">id</font>
+						</div>
+					</td>
+					<td width="10%" bgcolor="6f8ac4">
+						<div align="center">
+							<font color="#FFFFFF">userName</font>
+						</div>
+					</td>
+					<td width="40%" bgcolor="6f8ac4">
+						<div align="center">
+							<font color="#FFFFFF">userDesc</font>
+						</div>
+					</td>
+					<td width="5%" bgcolor="6f8ac4">
+						<div align="center">
+							<font color="#FFFFFF">other</font>
+						</div>
+					</td>
+					<td width="10%" bgcolor="6f8ac4">
+						<div align="center">
+							<font color="#FFFFFF">major</font>
+						</div>
+					</td>
+					<td width="22%" nowrap bgcolor="6f8ac4">
+						<div align="center">
+							<font color="#FFFFFF">registerTime</font>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<table>
+					<div id="sourcList"></div>
+					</table>
+				</tr>
+				<tr>
+					<td bgcolor="f5f5f5" colspan="4" align="center">
+						<table width="100%" border="0" cellspacing="1" cellpadding="3">
+							<tr>
+								<td width="10%"><INPUT TYPE="checkbox" NAME="all"
+									onclick="javascript:allselect(this, this.form.userIds)">全选</td>
+								<td width="85%"><input type="button" class="frm_btn"
+									onClick="javascript:deleteFiles(this.form)" value="shared">
+									&nbsp;&nbsp;</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+</body>
+</html>

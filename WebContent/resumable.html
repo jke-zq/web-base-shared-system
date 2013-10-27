@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Resumable.js - Multiple simultaneous, stable and resumable uploads via the HTML5 File API</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <div id="frame">
+
+      <h1>Resumable.js</h1>
+      <p>It's a JavaScript library providing multiple simultaneous, stable and resumable uploads via the HTML5 File API.</p>
+
+      <p>The library is designed to introduce fault-tolerance into the upload of large files through HTTP. This is done by splitting each files into small chunks; whenever the upload of a chunk fails, uploading is retried until the procedure completes. This allows uploads to automatically resume uploading after a network connection is lost either locally or to the server. Additionally, it allows for users to pause and resume uploads without loosing state.</p>
+
+      <p>Resumable.js relies on the HTML5 File API and the ability to chunks files into smaller pieces. Currently, this means that support is limited to Firefox 4+ and Chrome 11+.</p>
+
+      <hr/>
+
+      <h3>Demo</h3>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+      <script src="https://raw.github.com/23/resumable.js/master/resumable.js"></script>
+
+      <div class="resumable-error">
+        Your browser, unfortunately, is not supported by Resumable.js. The library requires support for <a href="http://www.w3.org/TR/FileAPI/">the HTML5 File API</a> along with <a href="http://www.w3.org/TR/FileAPI/#normalization-of-params">file slicing</a>.
+      </div>
+
+      <div class="resumable-drop" ondragenter="jQuery(this).addClass('resumable-dragover');" ondragend="jQuery(this).removeClass('resumable-dragover');" ondrop="jQuery(this).removeClass('resumable-dragover');">
+        Drop video files here to upload or <a class="resumable-browse"><u>select from your computer</u></a>
+      </div>
+      
+      <div class="resumable-progress">
+        <table>
+          <tr>
+            <td width="100%"><div class="progress-container"><div class="progress-bar"></div></div></td>
+            <td class="progress-text" nowrap="nowrap"></td>
+            <td class="progress-pause" nowrap="nowrap">
+              <a href="#" onclick="r.upload(); return(false);" class="progress-resume-link"><img src="resume.png" title="Resume upload" /></a>
+              <a href="#" onclick="r.pause(); return(false);" class="progress-pause-link"><img src="pause.png" title="Pause upload" /></a>
+            </td>
+          </tr>
+        </table>
+      </div>
+      
+      <ul class="resumable-list"></ul>
+
+      <script>
+        var r = new Resumable({
+            target:'/upload',
+            chunkSize:1*1024*1024,
+            simultaneousUploads:4,
+            testChunks:false,
+            throttleProgressCallbacks:1
+          });
+        // Resumable.js isn't supported, fall back on a different method
+        if(!r.support) {
+          $('.resumable-error').show();
+        } else {
+          // Show a place for dropping/selecting files
+          $('.resumable-drop').show();
+          r.assignDrop($('.resumable-drop')[0]);
+          r.assignBrowse($('.resumable-browse')[0]);
+
+          // Handle file add event
+          r.on('fileAdded', function(file){
+              // Show progress pabr
+              $('.resumable-progress, .resumable-list').show();
+              // Show pause, hide resume
+              $('.resumable-progress .progress-resume-link').hide();
+              $('.resumable-progress .progress-pause-link').show();
+              // Add the file to the list
+              $('.resumable-list').append('<li class="resumable-file-'+file.uniqueIdentifier+'">Uploading <span class="resumable-file-name"></span> <span class="resumable-file-progress"></span>');
+              $('.resumable-file-'+file.uniqueIdentifier+' .resumable-file-name').html(file.fileName);
+              // Actually start the upload
+              r.upload();
+            });
+          r.on('pause', function(){
+              // Show resume, hide pause
+              $('.resumable-progress .progress-resume-link').show();
+              $('.resumable-progress .progress-pause-link').hide();
+            });
+          r.on('complete', function(){
+              // Hide pause/resume when the upload has completed
+              $('.resumable-progress .progress-resume-link, .resumable-progress .progress-pause-link').hide();
+            });
+          r.on('fileSuccess', function(file,message){
+              // Reflect that the file upload has completed
+              $('.resumable-file-'+file.uniqueIdentifier+' .resumable-file-progress').html('(completed)');
+            });
+          r.on('fileError', function(file, message){
+              // Reflect that the file upload has resulted in error
+              $('.resumable-file-'+file.uniqueIdentifier+' .resumable-file-progress').html('(file could not be uploaded: '+message+')');
+            });
+          r.on('fileProgress', function(file){
+              // Handle progress for both the file and the overall upload
+              $('.resumable-file-'+file.uniqueIdentifier+' .resumable-file-progress').html(Math.floor(file.progress()*100) + '%');
+              $('.progress-bar').css({width:Math.floor(r.progress()*100) + '%'});
+            });
+        }
+      </script>
+
+    </div>
+  </body>
+</html>
+
+
+
+您面试的地点为：北京市海淀区王庄路1号清华同方科技广场D座西楼20层，
+时间为：2013.7.17（周三)下午14：00，请带好个人简历及签字笔，
+联系电话：62728247，请您准时出席~
+1.熟悉Java开发，熟悉多线程技术 
+2.优秀的学习能力与发现、分析并解决问题的能力 
+3.有较强的逻辑分析能力和学习能力 
+4.良好的团队合作精神与沟通能力 
+5.计算机或相关专业本科或以上学历 
+6.熟悉分布式系统原理、有hadoop/Hbase使用经验者优先 
+7.熟悉Linux/Unix操作系统，熟悉脚本编程(Shell/Perl/Php/Python其中一种）者优先 
+
+工作职责：
+负责搜狗云计算平台的建设与应用
+负责搜狗数据分析平台的设计与研发
+基本要求：
+优秀的学习能力与发现、分析并解决问题的能力
+良好的团队合作精神与沟通能力
+计算机或相关专业本科或以上学历
+技能要求：（有以下一种或多种经验者优先考虑）
+有开源软件使用和研发经验者优先
+熟悉分布式系统原理、有hadoop/Hbase使用经验者优先
+熟悉数据分析，数据挖掘理论技术和实践经验，有相关系统建设经验者优先
+
+
+
+Java Web开发工程师： 
+负责立方网产品的开发。 
+
+任职要求：
+1、本科以上学历，2年以上相关工作经验； 
+2、精通JAVA语言，有JSP/J2EE项目开发经验，有系统分析、设计经验； 
+3、熟练Struts2开发，并有相应的实际开发经验，熟练使用UML建模工具； 
+4、熟悉并且善于应用第三方开源类库； 
+5、熟悉Oracle/SQL Server/MySQL等主流数据库,Tomcat/apache等应用服务器的配置； 
+6、熟悉JNDI编程，熟悉ant、svn等开发工具，有JMS开发经验者优先； 
+7、善于学习吸收新知识，视野宽阔,具有良好的沟通能力以及团队合作精神。 
